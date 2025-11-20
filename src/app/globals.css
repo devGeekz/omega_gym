@@ -120,3 +120,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease-out;
+  }
+}

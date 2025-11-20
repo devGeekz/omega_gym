@@ -1,22 +1,12 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { GooeyText } from "@/components/ui/gooey-text-morphing";
+import { HomePageSections } from "@/components/ui/home-page-sections";
 import { Hero } from "@/components/ui/hr";
 export default function Home() {
   return (
     <div>
+      <main className="pt-24 min-h-screen flex items-center justify-center">{ <GooeyText texts={["Omega", "Gym", "Is", "Awesome"]} />} </main>
       <Hero />
-      <div>
-        
-
-      </div>
+      <HomePageSections />
     </div>
   );
 }
