@@ -8,11 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { Hero } from "@/components/ui/hr";
 export default function Home() {
   return (
     <div>
-      
+      <Hero />
       <div>
         
 
