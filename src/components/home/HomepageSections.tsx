@@ -5,7 +5,7 @@ import ClassSchdules from "./ClassSchedules";
 
 export function HomePageSections() {
   return (
-    <div className="mt-20 space-y-20">
+    <div className="space-y-20">
       {/* Equipment Showcase */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-8">

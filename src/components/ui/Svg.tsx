@@ -1,4 +1,4 @@
-export function HomeSvg() {
+export function HomeSvg({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,8 @@ export function HomeSvg() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-house w-4 h-4"
+      className={className}
+      // className="lucide lucide-house w-4 h-4"
       aria-hidden="true"
     >
       <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
@@ -18,7 +19,11 @@ export function HomeSvg() {
     </svg>
   );
 }
-export function CommunitySvg() {
+export function CommunitySvg({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +35,8 @@ export function CommunitySvg() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-users w-4 h-4"
+      className={className}
+      // className="lucide lucide-users w-4 h-4"
       aria-hidden="true"
     >
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -40,7 +46,11 @@ export function CommunitySvg() {
     </svg>
   );
 }
-export function CreditCardSvg() {
+export function CreditCardSvg({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +62,8 @@ export function CreditCardSvg() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-credit-card w-4 h-4"
+      className={className}
+      // className="lucide lucide-credit-card w-4 h-4"
       aria-hidden="true"
     >
       <rect width="20" height="14" x="2" y="5" rx="2"></rect>
@@ -60,44 +71,50 @@ export function CreditCardSvg() {
     </svg>
   );
 }
-export function MoonSvg() {
+export function MoonSvg({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-moon w-4 h-4 text-foreground"
-                aria-hidden="true"
-              >
-                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-              </svg>
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      // className="lucide lucide-moon w-4 h-4 text-foreground"
+      aria-hidden="true"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
   );
 }
 
-export function HamburgerMenuSvg() {
+export function HamburgerMenuSvg({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) {
   return (
-      <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-menu w-5 h-5 text-foreground"
-                aria-hidden="true"
-              >
-                <line x1="4" x2="20" y1="12" y2="12"></line>
-                <line x1="4" x2="20" y1="6" y2="6"></line>
-                <line x1="4" x2="20" y1="18" y2="18"></line>
-              </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      // className="lucide lucide-menu w-5 h-5 text-foreground"
+      aria-hidden="true"
+    >
+      <line x1="4" x2="20" y1="12" y2="12"></line>
+      <line x1="4" x2="20" y1="6" y2="6"></line>
+      <line x1="4" x2="20" y1="18" y2="18"></line>
+    </svg>
   );
 }

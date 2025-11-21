@@ -32,9 +32,7 @@ export default function RootLayout({
       >
         <BackgroundComponent>
           <Navbar />
-          <main className="relative z-10 pt-10 px-10 grow">
-              {children}
-            </main>
+          <main className="relative z-10 pt-40 px-10 grow">{children}</main>
           <Footer />
         </BackgroundComponent>
       </body>
