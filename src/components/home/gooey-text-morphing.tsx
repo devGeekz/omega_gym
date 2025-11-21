@@ -16,7 +16,7 @@ export function GooeyText({
   morphTime = 1,
   cooldownTime = 0.25,
   className,
-  textClassName
+  textClassName,
 }: GooeyTextProps) {
   const text1Ref = React.useRef<HTMLSpanElement>(null);
   const text2Ref = React.useRef<HTMLSpanElement>(null);
@@ -29,11 +29,17 @@ export function GooeyText({
 
     const setMorph = (fraction: number) => {
       if (text1Ref.current && text2Ref.current) {
-        text2Ref.current.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        text2Ref.current.style.filter = `blur(${Math.min(
+          8 / fraction - 8,
+          100
+        )}px)`;
         text2Ref.current.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
 
         fraction = 1 - fraction;
-        text1Ref.current.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        text1Ref.current.style.filter = `blur(${Math.min(
+          8 / fraction - 8,
+          100
+        )}px)`;
         text1Ref.current.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
       }
     };
@@ -75,7 +81,8 @@ export function GooeyText({
           textIndex = (textIndex + 1) % texts.length;
           if (text1Ref.current && text2Ref.current) {
             text1Ref.current.textContent = texts[textIndex % texts.length];
-            text2Ref.current.textContent = texts[(textIndex + 1) % texts.length];
+            text2Ref.current.textContent =
+              texts[(textIndex + 1) % texts.length];
           }
         }
         doMorph();
