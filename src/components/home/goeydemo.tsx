@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GooeyText } from "@/components/ui/gooey-text-morphing";
+import { GooeyText } from "@/components/home/gooey-text-morphing";
 
 function GooeyTextDemo() {
   return (

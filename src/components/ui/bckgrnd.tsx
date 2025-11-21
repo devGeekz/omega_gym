@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import React from "react";
 
 export const BackgroundComponent = ({
@@ -9,7 +8,7 @@ export const BackgroundComponent = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="flex flex-col flex-grow w-full relative bg-white">
+    <div className="flex flex-col grow w-full relative bg-white dark:bg-black">
       {/* Soft Yellow Glow */}
       <div
         className="absolute inset-0 z-0"
