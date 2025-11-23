@@ -2,7 +2,7 @@
 import Head from "next/head";
 import { motion } from "framer-motion";
 import ReviewStatistics from "@/components/community/ReviewStatistics";
-
+import ReviewForm from "@/components/community/ReviewForm";
 export default function Cpage() {
     return (
       <>
@@ -37,6 +37,7 @@ export default function Cpage() {
       </section>
      
       <div><ReviewStatistics /></div>
+      <div><ReviewForm /></div>
       </>
     );
 };
