@@ -3,6 +3,10 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import ReviewStatistics from "@/components/community/ReviewStatistics";
 import ReviewForm from "@/components/community/ReviewForm";
+import ReviewsSection from "@/components/community/ReviewSection";
+import SuccessStories from "@/components/community/SuccessStories";
+// import PhotoGallery from "@/components/community/PhotoGallery";
+
 export default function Cpage() {
     return (
       <>
@@ -38,6 +42,9 @@ export default function Cpage() {
      
       <div><ReviewStatistics /></div>
       <div><ReviewForm /></div>
+      <div><ReviewsSection/></div>
+      <div><SuccessStories/></div>
+      {/* <div><PhotoGallery/></div> */}
       </>
     );
 };

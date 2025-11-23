@@ -31,10 +31,10 @@ const ReviewForm = () => {
   return (
     <div className="bg-white rounded-2xl p-12 shadow-xl mb-16">
       <div className="text-center mb-8">
-        <h2 className="font-montserrat text-3xl md:text-4xl font-extrabold uppercase  mb-2">
+        <h2 className="font-montserrat text-3xl md:text-4xl font-extrabold uppercase  mb-2 dark:text-black">
           Share Your Experience
         </h2>
-        <p className="text-lg  max-w-2xl mx-auto">
+        <p className="text-lg  max-w-2xl mx-auto dark:text-black">
           Help others by sharing your fitness journey and experience with OMEGA.
         </p>
       </div>
@@ -43,7 +43,7 @@ const ReviewForm = () => {
         <div className="mb-8">
           <label 
             htmlFor="reviewer-name" 
-            className="block font-semibold mb-2 ]"
+            className="block font-semibold mb-2 dark:text-black"
           >
             Your Name
           </label>
@@ -58,7 +58,7 @@ const ReviewForm = () => {
         </div>
         
         <div className="mb-8">
-          <label className="block font-semibold mb-2 text-dark">
+          <label className="block font-semibold mb-2 dark:text-black">
             Rating
           </label>
           <div className="flex gap-2 justify-center">
@@ -94,7 +94,7 @@ const ReviewForm = () => {
             maxLength={500}
             className="w-full p-4 border-2 border-gray-500 rounded-xl text-base min-h-[120px] resize-vertical focus:outline-none focus:amber-300 focus:ring-3 focus:ring-[rgba(220,20,60,0.1)]"
           />
-          <div className="text-right text-sm text-gray-500] mt-2">
+          <div className="text-right text-sm text-gray-500 dark:text-gray-400 mt-2">
             <span 
               className={`${
                 charCount > 450 ? 'text-red-500' : 
