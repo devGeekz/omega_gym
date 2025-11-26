@@ -3,7 +3,7 @@ import SignInBlock from "@/components/login/Loginbox";
 
 export default function login() {
     return (
-        <div>
+        <div className=" flex items-center justify-center min-h-screen">
             <SignInBlock />
 
             
