@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import RotatingText from "./RotatingText"
+import Link from "next/link"
 
 const ArrowRight = () => (
   <svg
@@ -70,10 +71,13 @@ export function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-16 animate-fade-in-buttons">
           <Button
             size="lg"
-            className="bg-white text-black rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:scale-105 hover:shadow-lg group cursor-pointer relative overflow-hidden"
+            className="bg-white text-black rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:scale-105 hover:shadow-lg group relative overflow-hidden"
+            asChild
           >
-            Sign Up Now!!!
-            <ArrowRight />
+            <Link href="/login" className="cursor-pointer">
+              Sign Up Now!!!
+              <ArrowRight />
+            </Link>
           </Button>
 
           <Button

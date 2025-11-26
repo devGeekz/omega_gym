@@ -1,23 +1,23 @@
 "use client"
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState, HTMLAttributes } from "react"
-import { motion, AnimatePresence, Transition as MotionTransition } from "framer-motion"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react"
+import { motion, AnimatePresence, Transition as MotionTransition, HTMLMotionProps } from "framer-motion"
 
 import "./RotatingText.css"
-
-type Transition = {
-  type?: "spring" | "tween" | "inertia"
-  damping?: number
-  stiffness?: number
-  [key: string]: unknown
-}
 
 type AnimationProps = {
   y?: string | number
   opacity?: number
 }
 
-interface RotatingTextProps extends HTMLAttributes<HTMLSpanElement> {
+export interface RotatingTextHandle {
+  next: () => void
+  previous: () => void
+  jumpTo: (index: number) => void
+  reset: () => void
+}
+
+interface RotatingTextProps extends HTMLMotionProps<"span"> {
   texts: string[]
   transition?: MotionTransition
   initial?: AnimationProps
@@ -41,7 +41,7 @@ function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ")
 }
 
-const RotatingText = forwardRef<any, RotatingTextProps>((props, ref) => {
+const RotatingText = forwardRef<RotatingTextHandle, RotatingTextProps>((props, ref) => {
   const {
     texts,
     transition = { type: "spring", damping: 25, stiffness: 300 } as MotionTransition,
