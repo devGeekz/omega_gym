@@ -33,7 +33,7 @@ export function HeroSection() {
     <section className="min-h-screen flex items-center justify-center px-4 py-20 relative">
       <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-hero">
         {/* Badge */}
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-8 mt-12 animate-fade-in-badge">
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-black text-sm font-medium mb-8 mt-12 animate-fade-in-badge dark:text-white">
           <span className="w-2 h-2 bg-white/60 rounded-full mr-2 animate-pulse"></span>
           Login Now
         </div>
@@ -60,7 +60,7 @@ export function HeroSection() {
         </h1>
 
         {/* Subheading */}
-        <p className="text-base sm:text-xl md:text-2xl text-white text-balance max-w-sm sm:max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 sm:px-0 animate-fade-in-subheading font-light">
+        <p className="text-base sm:text-xl md:text-2xl text-black text-balance max-w-sm sm:max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 sm:px-0 animate-fade-in-subheading font-light dark:text-white">
           Join Omega Gym and embark on a transformative fitness journey tailored to your goals. 
           Experience state-of-the-art facilities, expert trainers, and a supportive community
           dedicated to helping you achieve your best self.
@@ -88,7 +88,7 @@ export function HeroSection() {
 
         {/* Trust Indicators */}
         <div className="text-center px-4 hidden sm:block overflow-hidden animate-fade-in-trust">
-          <p className="text-sm text-white mb-6">Train Like a Champion</p>
+          <p className="text-sm text-black mb-6 dark:text-white">Train Like a Champion</p>
           <div className="relative overflow-hidden w-full max-w-4xl mx-auto">
             <div className="flex items-center gap-8 opacity-60 hover:opacity-80 transition-all duration-500 animate-slide-left">
               <div className="flex items-center gap-8 whitespace-nowrap">
