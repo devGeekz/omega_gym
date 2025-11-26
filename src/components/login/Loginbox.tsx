@@ -14,6 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Mail, Lock } from "lucide-react";
+import Link from "next/link";
 
 interface SignInFormData {
   name?: string;
@@ -164,12 +165,12 @@ const SignInBlock = () => {
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
               {!isSignUp && (
-                <button
-                  type="button"
+                <Link
+                  href="/forgot-password"
                   className="text-sm text-primary hover:underline"
                 >
                   Forgot password?
-                </button>
+                </Link>
               )}
             </div>
             <Input
