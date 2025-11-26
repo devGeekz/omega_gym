@@ -14,12 +14,13 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Mail, Lock } from "lucide-react";
-import Link from "next/link";
 
 interface SignInFormData {
+  name?: string;
   email: string;
   password: string;
   rememberMe: boolean;
+  confirmPassword?: string;
 }
 
 interface FormErrors {
@@ -27,10 +28,12 @@ interface FormErrors {
   password?: string;
   rememberMe?: string;
   general?: string;
+  name?: string;
+  confirmPassword?: string;
 }
 
 const SignInBlock = () => {
-  const [formData, setFormData] = useState<SignInFormData>({
+  const [formData, setFormData] = useState<Partial<SignInFormData>>({
     email: "",
     password: "",
     rememberMe: false,
@@ -38,18 +41,29 @@ const SignInBlock = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.email.trim()) {
+    if (isSignUp && !formData.name?.trim()) {
+      newErrors.name = "Full name is required";
+    }
+
+    if (!formData.email?.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.password) {
+    if (!formData.password?.trim()) {
       newErrors.password = "Password is required";
+    }
+
+    if (isSignUp) {
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = "Passwords do not match";
+      }
     }
 
     setErrors(newErrors);
@@ -57,7 +71,7 @@ const SignInBlock = () => {
   };
 
   const handleInputChange = (
-    field: keyof SignInFormData,
+    field: keyof Partial<SignInFormData>,
     value: string | boolean
   ) => {
     setFormData((prev) => ({
@@ -83,7 +97,7 @@ const SignInBlock = () => {
 
     // 🔹 Simulate a fake request
     setTimeout(() => {
-      console.log("Form submitted:", formData);
+      console.log(isSignUp ? "Signing up with:" : "Signing in with:", formData);
 
       if (formData.rememberMe) {
         localStorage.setItem("rememberMe", "true");
@@ -98,8 +112,12 @@ const SignInBlock = () => {
   return (
     <Card className="w-full max-w-110 mx-auto flex flex-col gap-6 min-h-100">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-        <CardDescription>Sign in to your account to continue</CardDescription>
+        <CardTitle className="text-2xl font-bold">
+          {isSignUp ? "Create an Account" : "Welcome Back"}
+        </CardTitle>
+        <CardDescription>
+          {isSignUp ? "Enter your details to get started" : "Sign in to your account to continue"}
+        </CardDescription>
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -111,6 +129,23 @@ const SignInBlock = () => {
           )}
 
           <div className="flex flex-col gap-2">
+            {isSignUp && (
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={formData.name || ""}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  disabled={isLoading}
+                />
+                {errors.name && (
+                  <p className="text-sm text-red-600">{errors.name}</p>
+                )}
+              </div>
+            )}
+
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -128,12 +163,14 @@ const SignInBlock = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link
-                href="#"
-                className="text-sm text-primary hover:underline"
-              >
-                Forgot password?
-              </Link>
+              {!isSignUp && (
+                <button
+                  type="button"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Forgot password?
+                </button>
+              )}
             </div>
             <Input
               id="password"
@@ -148,18 +185,39 @@ const SignInBlock = () => {
             )}
           </div>
 
-          <div className="flex items-center justify-between">
-            <Checkbox
-              id="rememberMe"
-              checked={formData.rememberMe}
-              onCheckedChange={(checked) =>
-                handleInputChange("rememberMe", checked === true)
-              }
-            />
-            <Label htmlFor="rememberMe" className="ml-2 text-sm">
-              Remember me
-            </Label>
-          </div>
+          {isSignUp && (
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                placeholder="Re-enter your password"
+                value={formData.confirmPassword || ""}
+                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                disabled={isLoading}
+              />
+              {errors.confirmPassword && (
+                <p className="text-sm text-red-600">{errors.confirmPassword}</p>
+              )}
+            </div>
+          )}
+
+          {!isSignUp && (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <Checkbox
+                  id="rememberMe"
+                  checked={!!formData.rememberMe}
+                  onCheckedChange={(checked) =>
+                    handleInputChange("rememberMe", checked === true)
+                  }
+                />
+                <Label htmlFor="rememberMe" className="ml-2 text-sm cursor-pointer">
+                  Remember me
+                </Label>
+              </div>
+            </div>
+          )}
         </CardContent>
 
         <CardFooter className="flex flex-col gap-4">
@@ -168,18 +226,19 @@ const SignInBlock = () => {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? "Signing In..." : "Sign In"}
+            {isLoading ? (isSignUp ? "Creating Account..." : "Signing In...") : (isSignUp ? "Sign Up" : "Sign In")}
           </Button>
 
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link
-                href="#"
-                className="text-foreground decoration-0 no-underline font-normal"
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+              <button
+                type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-foreground decoration-0 no-underline font-normal hover:underline"
               >
-                Sign Up
-              </Link>
+                {isSignUp ? "Sign In" : "Sign Up"}
+              </button>
             </p>
           </div>
         </CardFooter>
