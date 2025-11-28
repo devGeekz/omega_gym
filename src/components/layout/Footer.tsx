@@ -7,15 +7,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Send,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react";
 import { GlassyContainer } from "../ui/glassy-background";
-import { DarkthemeBtn } from "./DarkthemeBtn";
 
 export default function Footer() {
   return (
@@ -152,7 +145,6 @@ export default function Footer() {
                 </TooltipProvider>
               </div>
               <div className="flex items-center space-x-2">
-                <DarkthemeBtn />
                 <Label htmlFor="dark-mode" className="sr-only">
                   Toggle dark mode
                 </Label>

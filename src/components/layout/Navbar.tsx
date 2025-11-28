@@ -8,14 +8,16 @@ import {
   HamburgerMenuSvg,
   HomeSvg,
 } from "@/components/ui/Svg";
-import { DarkthemeBtn } from "./DarkthemeBtn";
 import Logo from "./Logo";
 import { useState } from "react";
+import { DarkthemeBtn } from "./DarkthemeBtn";
 
 const navLinks = [
   { href: "/", label: "home", icon: HomeSvg },
   { href: "/community", label: "community", icon: CommunitySvg },
   { href: "/membership", label: "membership", icon: CreditCardSvg },
+  { href: "/login", label: "login" },
+  { href: "/register", label: "register" },
 ];
 
 export default function Navbar() {
@@ -52,7 +54,7 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  <Icon className="hidden md:block" />
+                  {Icon && <Icon className="hidden md:block" />}
                   <span>{label}</span>
                 </Link>
               );
@@ -98,7 +100,7 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  <Icon />
+                  {Icon && <Icon />}
                   <span className="capitalize">{label}</span>
                 </Link>
               );

@@ -2,22 +2,22 @@ import { isAllowedEmail } from "@/helper/emailValidator";
 import z, { object } from "zod";
 
 export const signInSchema = object({
+  rememberMe: z.boolean(),
   email: z.string().email("Invalid email"),
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, "Password must be more than 8 characters")
+    // .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters"),
 });
 export type SignInSchemaType = z.infer<typeof signInSchema>;
 
-// 000000000000000000000000000000000000000000000000000000000 //
 export const signUpSchema = z
   .object({
     fullname: z.string().min(1, "Full name is required"),
     email: z
       .string()
-      .email()
+      .email("Invalid email format")
       .refine((email) => isAllowedEmail(email), {
         message:
           "Email provider is not allowed. Please use a major email provider.",
@@ -25,7 +25,7 @@ export const signUpSchema = z
     password: z
       .string()
       .min(1, "Password is required")
-      .min(8, "Password must be more than 8 characters")
+      // .min(8, "Password must be more than 8 characters")
       .max(32, "Password must be less than 32 characters"),
     confirmPassword: z.string(),
   })
@@ -35,4 +35,5 @@ export const signUpSchema = z
   });
 
 export type SignUpSchemaType = z.infer<typeof signUpSchema>;
+
 // 000000000000000000000000000000000000000000000000000000000 //
