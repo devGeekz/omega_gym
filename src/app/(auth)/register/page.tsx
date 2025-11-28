@@ -7,9 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { auth } from "auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const SignUpPage = () => {
+const SignUpPage  = async () => {
+  const session = await auth();
+
+  if (session) {
+    redirect("/dashboard");
+  }
   return (
     <Card className="w-full max-w-110 mx-auto flex flex-col gap-6 min-h-100">
       <CardHeader className="text-center">

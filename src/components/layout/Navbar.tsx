@@ -11,6 +11,7 @@ import {
 import Logo from "./Logo";
 import { useState } from "react";
 import { DarkthemeBtn } from "./DarkthemeBtn";
+import { Avatar } from "./AvatarDropdown";
 
 const navLinks = [
   { href: "/", label: "home", icon: HomeSvg },
@@ -23,7 +24,6 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
@@ -64,6 +64,7 @@ export default function Navbar() {
           {/* ─── RIGHT CONTROLS ───────────────────────────────────── */}
           <div className="flex items-center gap-3">
             <DarkthemeBtn />
+            {/* <Avatar /> */}
 
             <button
               onClick={() => setIsOpen((prev) => !prev)}

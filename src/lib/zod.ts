@@ -2,7 +2,7 @@ import { isAllowedEmail } from "@/helper/emailValidator";
 import z, { object } from "zod";
 
 export const signInSchema = object({
-  rememberMe: z.boolean(),
+  rememberMe: z.boolean().optional().default(false),
   email: z.string().email("Invalid email"),
   password: z
     .string()
@@ -17,10 +17,11 @@ export const signUpSchema = z
     fullname: z.string().min(1, "Full name is required"),
     email: z
       .string()
+      .min(1, "Enter email")
       .email("Invalid email format")
       .refine((email) => isAllowedEmail(email), {
         message:
-          "Email provider is not allowed. Please use a major email provider.",
+          "Email provider is not allowed.",
       }),
     password: z
       .string()

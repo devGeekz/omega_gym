@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { signUpSchema, SignUpSchemaType } from "@/lib/zod";
 import FormError from "../FormError";
+import { redirect } from "next/navigation";
 
 type ErrorState = Partial<Record<keyof SignUpSchemaType, string>>;
 
@@ -64,6 +65,7 @@ export default function SignUpForm() {
         setGeneralError(error);
       } else {
         console.log("User created!");
+        redirect("/login");
       }
     } catch {
       setGeneralError("Network error. Please try again.");

@@ -1,270 +1,165 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
-import { Mail, Lock } from "lucide-react";
-import Link from "next/link";
+import FormError from "../FormError";
+import { signInSchema, SignInSchemaType } from "@/lib/zod";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 
-interface SignInFormData {
-  name?: string;
-  email: string;
-  password: string;
-  rememberMe: boolean;
-  confirmPassword?: string;
-}
+type ErrorState = Partial<Record<keyof SignInSchemaType, string>>;
 
-interface FormErrors {
-  email?: string;
-  password?: string;
-  rememberMe?: string;
-  general?: string;
-  name?: string;
-  confirmPassword?: string;
-}
-
-const LoginForm = () => {
-  const [formData, setFormData] = useState<Partial<SignInFormData>>({
+export default function LoginForm() {
+  const [form, setForm] = useState<SignInSchemaType>({
     email: "",
     password: "",
     rememberMe: false,
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+
+  const [errors, setErrors] = useState<ErrorState>({});
+  const [generalError, setGeneralError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
 
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (isSignUp && !formData.name?.trim()) {
-      newErrors.name = "Full name is required";
-    }
-
-    if (!formData.email?.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.password?.trim()) {
-      newErrors.password = "Password is required";
-    }
-
-    if (isSignUp) {
-      if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Passwords do not match";
-      }
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  /* ----------------------------- INPUT CHANGE -------------------------------- */
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleInputChange = (
-    field: keyof Partial<SignInFormData>,
-    value: string | boolean
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-
-    if (errors[field]) {
-      setErrors((prev) => ({
-        ...prev,
-        [field]: undefined,
-      }));
-    }
+  const handleCheckboxChange = (checked: boolean) => {
+    setForm((prev) => ({ ...prev, rememberMe: checked }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /* ----------------------------- SUBMIT --------------------------------------- */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
+    setGeneralError("");
     setIsLoading(true);
-    setErrors({});
 
-    // 🔹 Simulate a fake request
-    setTimeout(() => {
-      console.log(isSignUp ? "Signing up with:" : "Signing in with:", formData);
+    const validation = signInSchema.safeParse(form);
 
-      if (formData.rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      }
-
-      alert("Signed in successfully (demo only)");
-
+    if (!validation.success) {
+      const newErrors: ErrorState = {};
+      validation.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof SignInSchemaType;
+        newErrors[field] = issue.message;
+      });
+      setErrors(newErrors);
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(validation.data),
+      });
+
+      if (!res.ok) {
+        const { error }: { error: string } = await res.json();
+        setGeneralError(error);
+      } else {
+        redirect("/dashboard");
+      }
+    } catch {
+      setGeneralError("Network error. Please try again.");
+    }
+
+    setIsLoading(false);
   };
+
+  /* ------------------------------- JSX --------------------------------------- */
 
   return (
-    <Card className="w-full max-w-110 mx-auto flex flex-col gap-6 min-h-100">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">
-          {isSignUp ? "Create an Account" : "Welcome Back"}
-        </CardTitle>
-        <CardDescription>
-          {isSignUp ? "Enter your details to get started" : "Sign in to your account to continue"}
-        </CardDescription>
-      </CardHeader>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
+        {generalError && (
+          <div className="p-3 text-sm bg-red-50 border border-red-200 text-red-600 rounded-md">
+            <FormError text={generalError} />
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-        <CardContent className="flex flex-col gap-4">
-          {errors.general && (
-            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-              {errors.general}
-            </div>
-          )}
+        {/* Email */}
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="john.doe@example.com"
+            value={form.email}
+            onChange={handleChange}
+            disabled={isLoading}
+          />
+          <FormError text={errors.email} />
+        </div>
 
-          <div className="flex flex-col gap-2">
-            {isSignUp && (
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="John Doe"
-                  value={formData.name || ""}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
-                  disabled={isLoading}
-                />
-                {errors.name && (
-                  <p className="text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
-            )}
-
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="john.doe@example.com"
-              value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              disabled={isLoading}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-600">{errors.email}</p>
-            )}
+        {/* Password */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Password</Label>
+            <Link
+              href="/forgot-password"
+              className="text-sm text-primary hover:underline"
+            >
+              Forgot password?
+            </Link>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
-              {!isSignUp && (
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              )}
-            </div>
+          <div className="relative">
             <Input
               id="password"
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
+              value={form.password}
+              onChange={handleChange}
               disabled={isLoading}
             />
-            {errors.password && (
-              <p className="text-sm text-red-600">{errors.password}</p>
-            )}
+
+            {/* Password Eye Toggle */}
+            <button
+              type="button"
+              className="absolute top-2 right-3 text-gray-500 hover:text-gray-700"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
-          {isSignUp && (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type={showPassword ? "text" : "password"}
-                placeholder="Re-enter your password"
-                value={formData.confirmPassword || ""}
-                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                disabled={isLoading}
-              />
-              {errors.confirmPassword && (
-                <p className="text-sm text-red-600">{errors.confirmPassword}</p>
-              )}
-            </div>
-          )}
+          <FormError text={errors.password} />
+        </div>
 
-          {!isSignUp && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Checkbox
-                  id="rememberMe"
-                  checked={!!formData.rememberMe}
-                  onCheckedChange={(checked) =>
-                    handleInputChange("rememberMe", checked === true)
-                  }
-                />
-                <Label htmlFor="rememberMe" className="ml-2 text-sm cursor-pointer">
-                  Remember me
-                </Label>
-              </div>
-            </div>
-          )}
-        </CardContent>
+        {/* Remember Me */}
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="rememberMe"
+            checked={form.rememberMe}
+            onCheckedChange={(checked) =>
+              handleCheckboxChange(checked === true)
+            }
+          />
+          <Label htmlFor="rememberMe" className="text-sm cursor-pointer">
+            Remember me
+          </Label>
+        </div>
+      </div>
 
-        <CardFooter className="flex flex-col gap-4">
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isLoading}
-          >
-            {isLoading ? (isSignUp ? "Creating Account..." : "Signing In...") : (isSignUp ? "Sign Up" : "Sign In")}
-          </Button>
-
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-              <button
-                type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="text-foreground decoration-0 no-underline font-normal hover:underline"
-              >
-                {isSignUp ? "Sign In" : "Sign Up"}
-              </button>
-            </p>
+      {/* Submit Button */}
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <Loader2 className="w-4 h-4 animate-spin" /> Signing In...
           </div>
-        </CardFooter>
-      </form>
-    </Card>
+        ) : (
+          "Sign In"
+        )}
+      </Button>
+    </form>
   );
-};
-
-export default LoginForm;
-
-
-   {/* Remember me */}
-        // <div className="flex items-center">
-        //   <Checkbox
-        //     id="rememberMe"
-        //     checked={form.rememberMe}
-        //     onCheckedChange={(checked) =>
-        //       handleCheckboxChange(checked === true)
-        //     }
-        //   />
-        //   <Label htmlFor="rememberMe" className="ml-2 text-sm cursor-pointer">
-        //     Remember me
-        //   </Label>
-        // </div>
-
-  //         const handleCheckboxChange = (checked: boolean) => {
-  //   setForm((prev) => ({ ...prev, rememberMe: checked }));
-  // };
+}
