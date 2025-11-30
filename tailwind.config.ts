@@ -7,7 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{ts,tsx}",
+    // "./src/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
@@ -20,10 +20,12 @@ const config: Config = {
       },
       keyframes: {
         "slide-left": {
-          "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-100%)" },
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
         },
         "slide-left-mobile": {
-          "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-100%)" },
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
         },
       },
     },

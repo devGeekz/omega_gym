@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import FormError from "../FormError";
 import { signInSchema, SignInSchemaType } from "@/lib/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type ErrorState = Partial<Record<keyof SignInSchemaType, string>>;
 
@@ -24,7 +24,7 @@ export default function LoginForm() {
   const [generalError, setGeneralError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const { push } = useRouter();
   /* ----------------------------- INPUT CHANGE -------------------------------- */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,17 +60,18 @@ export default function LoginForm() {
         body: JSON.stringify(validation.data),
       });
 
+      const data = await res.json();
       if (!res.ok) {
-        const { error }: { error: string } = await res.json();
-        setGeneralError(error);
-      } else {
-        redirect("/dashboard");
+        setGeneralError(data.error || "Incorrect email or password");
+        return;
       }
+
+      push("/dashboard");
     } catch {
       setGeneralError("Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   /* ------------------------------- JSX --------------------------------------- */

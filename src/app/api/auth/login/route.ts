@@ -27,10 +27,6 @@ export async function POST(req: Request) {
       return jsonError("user does not exist", 401);
     }
 
-    // if (!existingUser.isVerified) {
-    //   return jsonError("Please verify your email. Check your inbox", 400);
-    // }
-
     try {
       await signIn("credentials", {
         email: email.toLowerCase(),
@@ -53,14 +49,13 @@ export async function POST(req: Request) {
             return jsonError("Incorrect email or password", 400);
 
           default:
-            return {
-              error: "An unknown error occurred",
-            };
+            return jsonError("An unknown error occurred", 403);
         }
       }
-      throw error;
+      // throw error;
     }
   } catch (error) {
     console.log(error);
+    return jsonError("Inter Server Error", 500);
   }
 }

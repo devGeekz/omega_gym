@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { signUpSchema, SignUpSchemaType } from "@/lib/zod";
 import FormError from "../FormError";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type ErrorState = Partial<Record<keyof SignUpSchemaType, string>>;
 
@@ -19,6 +19,7 @@ export default function SignUpForm() {
     confirmPassword: "",
   });
 
+  const { push } = useRouter();
   const [errors, setErrors] = useState<ErrorState>({});
   const [generalError, setGeneralError] = useState("");
 
@@ -60,13 +61,14 @@ export default function SignUpForm() {
         body: JSON.stringify(validation.data),
       });
 
+      const data = await res.json();
       if (!res.ok) {
-        const { error }: { error: string } = await res.json();
-        setGeneralError(error);
-      } else {
-        console.log("User created!");
-        redirect("/login");
+        setGeneralError(data.error || "Incorrect email or password");
+        return;
       }
+
+      setGeneralError("Login Success");
+      push("/login");
     } catch {
       setGeneralError("Network error. Please try again.");
     }
