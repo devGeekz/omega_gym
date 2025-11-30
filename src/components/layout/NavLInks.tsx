@@ -2,12 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CommunitySvg, CreditCardSvg, HomeSvg } from "@/components/ui/Svg";
+
+import {
+  Users,
+  CreditCard,
+  CalendarClock,
+  Tag,
+  FileText,
+  LayoutDashboard,
+} from "lucide-react";
 
 export const Links = [
-  { href: "/", label: "home", icon: HomeSvg },
-  { href: "/community", label: "community", icon: CommunitySvg },
-  { href: "/membership", label: "membership", icon: CreditCardSvg },
+  { href: "/community", label: "community", icon: Users },
+  { href: "/membership", label: "membership", icon: CreditCard },
+  { href: "/schedule", label: "schedules", icon: CalendarClock },
+  { href: "/pricing", label: "pricing", icon: Tag },
+  { href: "/article", label: "article", icon: FileText },
+  { href: "/admin/dashboard", label: "admin panel", icon: LayoutDashboard },
 ];
 
 export default function NavLinks() {
@@ -37,7 +48,7 @@ export default function NavLinks() {
                     }
                   `}
             >
-              {Icon && <Icon className="hidden md:block" />}
+              {Icon && <Icon className="hidden md:block size-4" />}
               <span>{label}</span>
             </Link>
           );

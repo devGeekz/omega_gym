@@ -14,11 +14,11 @@ import {
 } from "../ui/Svg";
 import Link from "next/link";
 
-const Links = [
-  { href: "/", label: "home", icon: HomeSvg },
-  { href: "/community", label: "community", icon: CommunitySvg },
-  { href: "/membership", label: "membership", icon: CreditCardSvg },
-];
+// const Links = [
+//   { href: "/", label: "home", icon:  },
+//   { href: "/community", label: "community", icon: CommunitySvg },
+//   { href: "/membership", label: "membership", icon: CreditCardSvg },
+// ];
 
 export function MobileNav() {
   return (
@@ -30,14 +30,30 @@ export function MobileNav() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
-          {Links.map((link, index) => (
-            <DropdownMenuItem key={index}>
-              <Link href={`${link.href}`}>
-                {link.label}
-                <DropdownMenuShortcut></DropdownMenuShortcut>
-              </Link>
-            </DropdownMenuItem>
-          ))}
+          <DropdownMenuItem>
+            <Link href={`/`} className="flex gap-2 items-center">
+              <DropdownMenuShortcut>
+                <HomeSvg />
+              </DropdownMenuShortcut>
+              Home
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={`/`} className="flex gap-2 items-center">
+              <DropdownMenuShortcut>
+                <CommunitySvg />
+              </DropdownMenuShortcut>
+              Community
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={`/`} className="flex gap-2 items-center">
+              <DropdownMenuShortcut>
+                <CreditCardSvg />
+              </DropdownMenuShortcut>
+              Membership
+            </Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

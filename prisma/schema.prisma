@@ -28,20 +28,112 @@ model Account {
 }
 
 model User {
-  id            String            @id @default(cuid())
-  name          String?
-  email         String?           @unique
-  password      String?
-  emailVerified DateTime?         @map("email_verified")
-  image         String?
-  role          Role              @default(CLIENT)
-  userStatus    VerficationStatus @default(PENDING)
-  accounts      Account[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String             @id @default(cuid())
+  name               String?
+  email              String?            @unique
+  password           String?
+  emailVerified      DateTime?          @map("email_verified")
+  image              String?
+  role               Role               @default(CLIENT)
+  userStatus         VerficationStatus  @default(PENDING)
+  accounts           Account[]
+  stripeCustomerId   String?            @unique
+  subscriptionStatus SubscriptionStatus @default(NONE)
+  subscriptions      Subscription[]
+  bookings           Booking[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
   @@map("users")
+}
+
+model MembershipPlan {
+  id                   String         @id @default(cuid())
+  name                 String
+  description          String?
+  features             String[] // ["24/7 access", "Free classes", ...]
+  priceMonthly         Int? // stored in cents
+  priceYearly          Int?
+  stripeProductId      String?
+  stripePriceIdMonthly String?
+  stripePriceIdYearly  String?
+  subscriptions        Subscription[]
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  user                 User               @relation(fields: [userId], references: [id])
+  userId               String
+  plan                 MembershipPlan     @relation(fields: [planId], references: [id])
+  planId               String
+  stripeSubscriptionId String?            @unique
+  status               SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+}
+
+model Trainer {
+  id              String          @id @default(cuid())
+  name            String
+  specialty       String?
+  experienceYears Int?
+  profilePhoto    String?
+  bio             String?
+  socialLinks     Json?
+  programs        Program[]
+  classSchedules  ClassSchedule[]
+}
+
+model Program {
+  id             String          @id @default(cuid())
+  title          String
+  description    String?
+  difficulty     Difficulty      @default(BEGINNER)
+  durationWeeks  Int?
+  trainer        Trainer?        @relation(fields: [trainerId], references: [id])
+  trainerId      String?
+  coverImage     String?
+  content        Json? // for rich text (Sanity, PortableText, etc.)
+  classSchedules ClassSchedule[]
+}
+
+model ClassSchedule {
+  id        String    @id @default(cuid())
+  program   Program   @relation(fields: [programId], references: [id])
+  programId String
+  trainer   Trainer   @relation(fields: [trainerId], references: [id])
+  trainerId String
+  date      DateTime
+  time      DateTime
+  maxSlots  Int       @default(20)
+  bookings  Booking[]
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  user       User          @relation(fields: [userId], references: [id])
+  userId     String
+  schedule   ClassSchedule @relation(fields: [scheduleId], references: [id])
+  scheduleId String
+  createdAt  DateTime      @default(now())
+}
+
+// ---------------------------------------------------------
+//  Enums
+// ---------------------------------------------------------
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  NONE
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }
 
 enum Role {
