@@ -44,7 +44,7 @@ export default function NavLinks() {
                     ${
                       active
                         ? "font-semibold text-foreground border-b-2 border-primary/70"
-                        : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
+                        : "text- hover:bg-accent/50 hover:text-accent-foreground"
                     }
                   `}
             >

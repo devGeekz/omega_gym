@@ -16,7 +16,7 @@ const mockUser = {
 
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-6 pt-32 pb-20">
+    <main className="min-h-screen dark:bg-black bc text-white px-6 pt-32 pb-20">
       <motion.h1
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

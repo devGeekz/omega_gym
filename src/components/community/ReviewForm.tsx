@@ -1,9 +1,10 @@
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 const ReviewForm = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [charCount, setCharCount] = useState(0);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -17,14 +18,14 @@ const ReviewForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!comment.trim()) {
-      alert('Please write a review before submitting.');
+      alert("Please write a review before submitting.");
       return;
     }
     console.log({ name, rating, comment });
     // Reset form
-    setName('');
+    setName("");
     setRating(0);
-    setComment('');
+    setComment("");
     setCharCount(0);
   };
 
@@ -38,11 +39,11 @@ const ReviewForm = () => {
           Help others by sharing your fitness journey and experience with OMEGA.
         </p>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
         <div className="mb-8">
-          <label 
-            htmlFor="reviewer-name" 
+          <label
+            htmlFor="reviewer-name"
             className="block font-semibold mb-2 dark:text-black"
           >
             Your Name
@@ -56,7 +57,7 @@ const ReviewForm = () => {
             className="w-full p-4 border-2 border-gray-500 rounded-xl text-base focus:outline-none focus:border-amber-300 focus:ring-3 focus:ring-[rgba(220,20,60,0.1)]"
           />
         </div>
-        
+
         <div className="mb-8">
           <label className="block font-semibold mb-2 dark:text-black">
             Rating
@@ -68,9 +69,7 @@ const ReviewForm = () => {
                 type="button"
                 onClick={() => setRating(star)}
                 className={`text-3xl transition-transform ${
-                  star <= rating 
-                    ? 'text-amber-300 scale-110' 
-                    : 'text-gray-400 '
+                  star <= rating ? "text-amber-300 scale-110" : "text-gray-400 "
                 }`}
               >
                 ★
@@ -78,10 +77,10 @@ const ReviewForm = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="mb-8">
-          <label 
-            htmlFor="review-comment" 
+          <label
+            htmlFor="review-comment"
             className="block font-semibold mb-2 text-gray-800"
           >
             Your Review
@@ -95,10 +94,13 @@ const ReviewForm = () => {
             className="w-full p-4 border-2 border-gray-500 rounded-xl text-base min-h-[120px] resize-vertical focus:outline-none focus:amber-300 focus:ring-3 focus:ring-[rgba(220,20,60,0.1)]"
           />
           <div className="text-right text-sm text-gray-500 dark:text-gray-400 mt-2">
-            <span 
+            <span
               className={`${
-                charCount > 450 ? 'text-red-500' : 
-                charCount > 400 ? 'text-yellow-500' : 'text-gray-500'
+                charCount > 450
+                  ? "text-red-500"
+                  : charCount > 400
+                  ? "text-yellow-500"
+                  : "text-gray-500"
               }`}
             >
               {charCount}
@@ -106,7 +108,7 @@ const ReviewForm = () => {
             / 500 characters
           </div>
         </div>
-        
+
         <button
           type="submit"
           className="w-full py-4 bg-gray-400 text-white text-lg font-semibold rounded-xl hover:bg-green-500 hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl"

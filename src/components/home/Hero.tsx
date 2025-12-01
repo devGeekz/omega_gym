@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +32,13 @@ function Hero() {
               </Button>
             </div>
           </div>
-          <div className="bg-muted rounded-md aspect-square"></div>
+          <div className="bg-muted rounded-md aspect-square">
+            <img
+              src="/images/dunk.jpg"
+              alt="hero image"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
     </div>

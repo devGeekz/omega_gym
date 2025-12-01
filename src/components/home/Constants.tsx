@@ -54,14 +54,17 @@ export const Equipments = [
   {
     title: "Strength Training",
     desc: "Comprehensive free weights and resistance machines for building muscle and increasing strength.",
+    imaggeUrl:'/images/core.jpg'
   },
   {
     title: "Cardio Zone",
     desc: "Advanced treadmills, ellipticals, and bikes with smart tracking and entertainment systems.",
+    imaggeUrl:'/images/threadmill.jpg'
   },
   {
     title: "Functional Training",
     desc: "Suspension systems, battle ropes, and kettlebells for real-world movement patterns.",
+    imaggeUrl:'/images/cardio.jpg'
   },
 ];
 

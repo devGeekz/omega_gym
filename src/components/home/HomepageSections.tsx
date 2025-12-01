@@ -1,7 +1,8 @@
-import Link from "next/link";
+/* eslint-disable @next/next/no-img-element */
 import { Equipments, Testimonials } from "./Constants";
 import Memberships from "./MembershipCards";
 import ClassSchdules from "./ClassSchedules";
+import Cta from "./Cta";
 
 export function HomePageSections() {
   return (
@@ -26,7 +27,12 @@ export function HomePageSections() {
                 className="bg-card rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 cursor-pointer"
               >
                 <div className="h-48 bg-linear-to-br from-primary to-muted-foreground/50 flex items-center justify-center">
-                  <div className="text-6xl">🏋️</div>
+                  {/* <div className="text-6xl">🏋️</div> */}
+                  <img
+                    src={`${item.imaggeUrl}`}
+                    alt="hero image"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold uppercase mb-3 text-card-foreground">
@@ -82,31 +88,7 @@ export function HomePageSections() {
         </div>
       </section>
       {/* CTA Section */}
-      <section className="py-20 bg-primary dark:bg-background/40 text-primary-foreground dark:text-muted-foreground">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-black uppercase mb-4">
-            Ready to Transform?
-          </h2>
-          <p className="text-lg opacity-80 mb-8 max-w-2xl mx-auto">
-            Join thousands of members who have already started their fitness
-            journey with us.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/membership"
-              className="px-8 py-4 bg-destructive text-primary-foreground rounded-full font-semibold hover:bg-destructive/90 transition-all"
-            >
-              Get Started Today
-            </Link>
-            <Link
-              href="/community"
-              className="px-8 py-4 border-2 border-primary-foreground dark:border-muted-foreground/70 text-primary-foreground dark:text-muted-foreground rounded-full font-semibold hover:bg-primary-foreground hover:text-primary transition-all"
-            >
-              Join Community
-            </Link>
-          </div>
-        </div>
-      </section>
+      <Cta />
     </div>
   );
 }

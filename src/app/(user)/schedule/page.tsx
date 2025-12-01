@@ -30,7 +30,9 @@ export default function SchedulePage() {
             transition={{ delay: i * 0.1 }}
             className="bg-zinc-900 border border-zinc-700 p-6 rounded-xl"
           >
-            <h2 className="text-xl font-semibold mb-3 text-indigo-400">{d.day}</h2>
+            <h2 className="text-xl font-semibold mb-3 text-indigo-400">
+              {d.day}
+            </h2>
             <ul className="space-y-2 text-gray-300">
               {d.classes.map((c, j) => (
                 <li key={j} className="bg-zinc-800 py-2 px-3 rounded-lg">

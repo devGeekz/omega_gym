@@ -1,8 +1,14 @@
-'use client'
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Check } from "lucide-react";
+"use client";
+import { Button } from "../ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 
 const plans = [
   {
@@ -10,11 +16,7 @@ const plans = [
     name: "Basic",
     price: 199,
     desc: "Perfect for beginners who want access to gym equipment.",
-    features: [
-      "Gym Equipment Access",
-      "Locker Room",
-      "1 Free Class Monthly",
-    ],
+    features: ["Gym Equipment Access", "Locker Room", "1 Free Class Monthly"],
   },
   {
     id: "premium",
@@ -43,10 +45,10 @@ const plans = [
   },
 ];
 
-export default function MembershipPage() {
+const Memberships = () => {
   return (
-    <main className="min-h-screen bg-black text-white px-6 pt-32 pb-20">
-      <div className="max-w-6xl mx-auto text-center">
+    <section className="">
+      <div className="max-w-6xl mx-auto text-center text-pretty text-primary">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,7 +62,7 @@ export default function MembershipPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-gray-300 text-lg max-w-2xl mx-auto"
+          className="text-lg max-w-2xl mx-auto"
         >
           Choose the perfect plan for your fitness journey.
         </motion.p>
@@ -76,7 +78,9 @@ export default function MembershipPage() {
           >
             <Card
               className={`bg-zinc-900 border ${
-                plan.highlight ? "border-indigo-500 shadow-xl shadow-indigo-500/30" : "border-zinc-700"
+                plan.highlight
+                  ? "border-indigo-500 shadow-xl shadow-indigo-500/30"
+                  : "border-zinc-700"
               } rounded-2xl`}
             >
               <CardHeader>
@@ -103,17 +107,10 @@ export default function MembershipPage() {
               </CardContent>
 
               <CardFooter>
-                <form
-                  action="/api/checkout"
-                  method="POST"
-                  className="w-full"
-                >
+                <form action="/api/checkout" method="POST" className="w-full">
                   <input type="hidden" name="planId" value={plan.id} />
 
-                  <Button
-                    type="submit"
-                    className="w-full py-6 text-lg"
-                  >
+                  <Button type="submit" className="w-full py-6 text-lg">
                     Subscribe
                   </Button>
                 </form>
@@ -122,6 +119,8 @@ export default function MembershipPage() {
           </motion.div>
         ))}
       </div>
-    </main>
+    </section>
   );
-}
+};
+
+export default Memberships;

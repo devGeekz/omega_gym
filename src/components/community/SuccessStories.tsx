@@ -17,7 +17,7 @@ const SuccessStories = () => {
     {
       title: "Sarah's Journey",
       description: "Lost 40 pounds and gained incredible strength. The community support kept me motivated every step of the way!",
-      image: "/resources/member-1.jpg",
+      image: "/images/pose.jpg",
       stats: [
         { value: "40 lbs", label: "Weight Lost" },
         { value: "6 months", label: "Timeframe" },
@@ -27,7 +27,7 @@ const SuccessStories = () => {
     {
       title: "Mike's Transformation",
       description: "From couch potato to marathon runner. The trainers here believed in me when I didn't believe in myself.",
-      image: "/resources/member-2.jpg",
+      image: "/images/girlwithglove.jpg",
       stats: [
         { value: "26.2 mi", label: "Marathon" },
         { value: "8 months", label: "Training" },
@@ -37,7 +37,7 @@ const SuccessStories = () => {
     {
       title: "Emma's Strength",
       description: "At 45, I'm stronger than I was in my twenties. The personal training program completely changed my life.",
-      image: "/resources/trainer-session.jpg",
+      image: "/images/trainer2.jpg",
       stats: [
         { value: "200 lbs", label: "Deadlift" },
         { value: "12 months", label: "Training" },
@@ -70,7 +70,7 @@ const SuccessStories = () => {
                   alt={story.title}
                   width={300}
                   height={200}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale-75"
                 />
               </div>
               <div className="p-6">

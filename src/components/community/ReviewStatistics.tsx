@@ -1,5 +1,5 @@
-// components/ReviewStatistics.tsx
-import { motion } from 'framer-motion';
+"use client";
+import { motion } from "framer-motion";
 
 interface StatCardProps {
   number: string;
@@ -14,13 +14,13 @@ const StatCard = ({ number, label, showStars = false }: StatCardProps) => (
         {number}
       </div>
       {showStars && (
-        <div className="text-2xl mb-2 text-yellow-500 dark:text-yellow-500">★★★★★</div>
+        <div className="text-2xl mb-2 text-yellow-500 dark:text-yellow-500">
+          ★★★★★
+        </div>
       )}
     </div>
     <div>
-      <div className="font-medium dark:text-black">
-        {label}
-      </div>
+      <div className="font-medium dark:text-black">{label}</div>
     </div>
   </div>
 );
@@ -44,17 +44,25 @@ const ReviewStatistics = () => {
   return (
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
         >
-          <motion.div variants={itemVariants}><StatCard number="4.8" label="Overall Rating" showStars={true} /></motion.div>
-          <motion.div variants={itemVariants}><StatCard number="2,847" label="Reviews" /></motion.div>
-          <motion.div variants={itemVariants}><StatCard number="1,293" label="Success Stories" /></motion.div>
-          <motion.div variants={itemVariants}><StatCard number="98%" label="Satisfaction Rate" /></motion.div>
+          <motion.div variants={itemVariants}>
+            <StatCard number="4.8" label="Overall Rating" showStars={true} />
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <StatCard number="2,847" label="Reviews" />
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <StatCard number="1,293" label="Success Stories" />
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <StatCard number="98%" label="Satisfaction Rate" />
+          </motion.div>
         </motion.div>
       </div>
     </section>
