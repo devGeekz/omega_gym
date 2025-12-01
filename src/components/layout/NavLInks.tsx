@@ -7,7 +7,6 @@ import {
   Users,
   CreditCard,
   CalendarClock,
-  Tag,
   FileText,
   LayoutDashboard,
 } from "lucide-react";
@@ -16,7 +15,6 @@ export const Links = [
   { href: "/community", label: "community", icon: Users },
   { href: "/membership", label: "membership", icon: CreditCard },
   { href: "/schedule", label: "schedules", icon: CalendarClock },
-  { href: "/pricing", label: "pricing", icon: Tag },
   { href: "/article", label: "article", icon: FileText },
   { href: "/admin/dashboard", label: "admin panel", icon: LayoutDashboard },
 ];

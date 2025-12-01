@@ -9,25 +9,25 @@ const trainers = [
     id: 1,
     name: "Alex Johnson",
     specialty: "Strength Coach",
-    image: "/images/trainers/trainer1.jpg",
+    image: "/images/trainer1.jpg",
   },
   {
     id: 2,
     name: "Mia Chen",
     specialty: "Yoga Instructor",
-    image: "/images/trainers/trainer2.jpg",
+    image: "/images/trainer2.jpg",
   },
   {
     id: 3,
     name: "Marcus Lee",
     specialty: "HIIT Specialist",
-    image: "/images/trainers/trainer3.jpg",
+    image: "/images/trainer3.jpg",
   },
 ];
 
-export default function TrainersPage() {
+export default function Trainers() {
   return (
-    <main className="min-h-screen bg-black text-white px-6 pt-32 pb-20">
+    <main className="bg-accent text-primary px-6 pt-32 pb-20">
       <div className="max-w-6xl mx-auto">
         <motion.h1
           initial={{ opacity: 0 }}
@@ -46,15 +46,16 @@ export default function TrainersPage() {
               transition={{ delay: index * 0.2 }}
             >
               <Card className="bg-zinc-900 border-zinc-700 overflow-hidden rounded-2xl">
-                <Image
+              
+                <CardHeader>
+                    <Image
                   src={t.image}
                   alt={t.name}
                   width={400}
                   height={400}
-                  className="h-64 w-full object-cover"
+                  className="w-full h-full object-cover"
                 />
-                <CardHeader>
-                  <h2 className="text-xl font-bold">{t.name}</h2>
+                  <h2 className="text-xl text-gray-300 font-bold">{t.name}</h2>
                   <p className="text-gray-400">{t.specialty}</p>
                 </CardHeader>
                 <CardContent>
