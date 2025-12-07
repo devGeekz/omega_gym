@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import RotatingText from "./RotatingText"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import RotatingText from "./RotatingText";
+import Link from "next/link";
 
 const ArrowRight = () => (
   <svg
@@ -9,9 +9,14 @@ const ArrowRight = () => (
     stroke="currentColor"
     viewBox="0 0 24 24"
   >
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 5l7 7-7 7"
+    />
   </svg>
-)
+);
 
 const Play = () => (
   <svg
@@ -27,13 +32,12 @@ const Play = () => (
       d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2z"
     />
   </svg>
-)
+);
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-20 relative">
+    <section className="min-h-screend flex items-center justify-center px-4 md:py-20 relative">
       <div className="max-w-4xl mx-auto text-center relative z-10 animate-fade-in-hero">
-
         {/* Main Heading */}
         <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 animate-fade-in-heading">
           <span className="text-foreground">Omega Gym</span>
@@ -56,10 +60,11 @@ export function HeroSection() {
         </h1>
 
         {/* Subheading */}
-        <p className="text-base sm:text-xl md:text-2xl text-black text-balance max-w-sm sm:max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 sm:px-0 animate-fade-in-subheading font-light dark:text-white">
-          Join Omega Gym and embark on a transformative fitness journey tailored to your goals. 
-          Experience state-of-the-art facilities, expert trainers, and a supportive community
-          dedicated to helping you achieve your best self.
+        <p className="text-base sm:text-xs md:text-base text-black text-balance max-w-sm sm:max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 sm:px-0 animate-fade-in-subheading font-light dark:text-white">
+          Join Omega Gym and embark on a transformative fitness journey tailored
+          to your goals. Experience state-of-the-art facilities, expert
+          trainers, and a supportive community dedicated to helping you achieve
+          your best self.
         </p>
 
         {/* CTA Buttons */}
@@ -69,7 +74,7 @@ export function HeroSection() {
             className="bg-white text-black rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 hover:bg-gray-50 hover:scale-105 hover:shadow-lg group relative overflow-hidden"
             asChild
           >
-            <Link href="/login" className="cursor-pointer">
+            <Link href="/login">
               Sign Up Now!!!
               <ArrowRight />
             </Link>
@@ -80,32 +85,60 @@ export function HeroSection() {
             size="lg"
             className="rounded-full px-8 py-4 text-lg font-medium border-border hover:bg-accent transition-all duration-200 hover:scale-105 group bg-transparent cursor-pointer"
           >
-            <Play />
-            Read Community Stories
+            <Link href={"/community"} className="flex items-center">
+              <Play />
+              Read Community Stories
+            </Link>
           </Button>
         </div>
 
         {/* Trust Indicators */}
         <div className="text-center px-4 hidden sm:block overflow-hidden animate-fade-in-trust">
-          <p className="text-sm text-black mb-6 dark:text-white">Train Like a Champion</p>
+          <p className="text-sm text-black mb-6 dark:text-white">
+            Train Like a Champion
+          </p>
           <div className="relative overflow-hidden w-full max-w-4xl mx-auto">
             <div className="flex items-center gap-8 opacity-60 hover:opacity-80 transition-all duration-500 animate-slide-left">
               <div className="flex items-center gap-8 whitespace-nowrap">
-                <div className="text-base sm:text-lg font-semibold">24/7 Access</div>
-                <div className="text-base sm:text-lg font-semibold">Expert Personal Training</div>
-                <div className="text-base sm:text-lg font-semibold">Olympic-Grade Equipment</div>
-                <div className="text-base sm:text-lg font-semibold">Group Fitness Classes</div>
-                <div className="text-base sm:text-lg font-semibold">Recovery Zone</div>
-                <div className="text-base sm:text-lg font-semibold">Nutrition Coaching</div>
+                <div className="text-base sm:text-lg font-semibold">
+                  24/7 Access
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Expert Personal Training
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Olympic-Grade Equipment
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Group Fitness Classes
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Recovery Zone
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Nutrition Coaching
+                </div>
               </div>
               {/* Duplicate for seamless loop */}
               <div className="flex items-center gap-8 whitespace-nowrap">
-                <div className="text-base sm:text-lg font-semibold">24/7 Access</div>
-                <div className="text-base sm:text-lg font-semibold">Expert Personal Training</div>
-                <div className="text-base sm:text-lg font-semibold">Olympic-Grade Equipment</div>
-                <div className="text-base sm:text-lg font-semibold">Group Fitness Classes</div>
-                <div className="text-base sm:text-lg font-semibold">Recovery Zone</div>
-                <div className="text-base sm:text-lg font-semibold">Nutrition Coaching</div>
+                <div className="text-base sm:text-lg font-semibold">
+                  24/7 Access
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Expert Personal Training
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Olympic-Grade Equipment
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Group Fitness Classes
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Recovery Zone
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Nutrition Coaching
+                </div>
               </div>
             </div>
           </div>
@@ -116,31 +149,55 @@ export function HeroSection() {
           <p className="text-sm text-white mb-6">Train Like a Champion</p>
           <div className="relative overflow-hidden w-full max-w-sm mx-auto">
             {/* Left blur fade */}
-            <div className="absolute left-0 top-0 w-8 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 w-8 h-full bg-linear-to-r from-black to-transparent z-10 pointer-events-none"></div>
             {/* Right blur fade */}
-            <div className="absolute right-0 top-0 w-8 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 w-8 h-full bg-linear-to-l from-black to-transparent z-10 pointer-events-none"></div>
             <div className="flex items-center gap-6 opacity-60 animate-slide-left-mobile">
               <div className="flex items-center gap-6 whitespace-nowrap">
-                <div className="text-base sm:text-lg font-semibold">24/7 Access</div>
-                <div className="text-base sm:text-lg font-semibold">Expert Personal Training</div>
-                <div className="text-base sm:text-lg font-semibold">Olympic-Grade Equipment</div>
-                <div className="text-base sm:text-lg font-semibold">Group Fitness Classes</div>
-                <div className="text-base sm:text-lg font-semibold">Recovery Zone</div>
-                <div className="text-base sm:text-lg font-semibold">Nutrition Coaching</div>
+                <div className="text-base sm:text-lg font-semibold">
+                  24/7 Access
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Expert Personal Training
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Olympic-Grade Equipment
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Group Fitness Classes
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Recovery Zone
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Nutrition Coaching
+                </div>
               </div>
               {/* Duplicate for seamless loop */}
               <div className="flex items-center gap-6 whitespace-nowrap">
-                <div className="text-base sm:text-lg font-semibold">24/7 Access</div>
-                <div className="text-base sm:text-lg font-semibold">Expert Personal Training</div>
-                <div className="text-base sm:text-lg font-semibold">Olympic-Grade Equipment</div>
-                <div className="text-base sm:text-lg font-semibold">Group Fitness Classes</div>
-                <div className="text-base sm:text-lg font-semibold">Recovery Zone</div>
-                <div className="text-base sm:text-lg font-semibold">Nutrition Coaching</div>
+                <div className="text-base sm:text-lg font-semibold">
+                  24/7 Access
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Expert Personal Training
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Olympic-Grade Equipment
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Group Fitness Classes
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Recovery Zone
+                </div>
+                <div className="text-base sm:text-lg font-semibold">
+                  Nutrition Coaching
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

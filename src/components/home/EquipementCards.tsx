@@ -4,7 +4,7 @@ import { Equipments } from "./Constants";
 const EquipmentCards = () => {
   return (
     <section className="py-20">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto md:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 text-foreground">
             Premium Equipment
@@ -19,7 +19,7 @@ const EquipmentCards = () => {
           {Equipments.map((item, idx) => (
             <div
               key={idx}
-              className="bg-card rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 cursor-pointer"
+              className="bg-card rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300"
             >
               <div className="h-48 bg-linear-to-br from-primary to-muted-foreground/50 flex items-center justify-center">
                 <img

@@ -11,7 +11,7 @@ export default function Layout({ children }: LayoutProps) {
     <div className="">
       <BackgroundComponent>
         <Navbar />
-        <main className="relative z-10 pt-40x px-x10 grow">{children}</main>
+        <main className="relative z-10 grow">{children}</main>
         <Footer />
       </BackgroundComponent>
     </div>

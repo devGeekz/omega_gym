@@ -8,7 +8,7 @@ const Memberships = () => {
 
   return (
     <section className="">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto md:px-8">
         <div className="text-center mb-16 animate-on-scrodll">
           <h2 className="text-4xl md:text-5xl font-black text-primary/70 uppercase mb-4">
             Choose Your Plan

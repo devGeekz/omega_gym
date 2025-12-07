@@ -18,7 +18,7 @@ const LoginPage = async () => {
     redirect("/dashboard");
   }
   return (
-    <Card className="w-full max-w-110 mx-auto flex flex-col gap-6 min-h-100">
+    <Card className="w-full max-w-110 mx-auto flex flex-col gap-6 min-h-100 mt-32">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
         <CardDescription>Sign in to your account to continue</CardDescription>

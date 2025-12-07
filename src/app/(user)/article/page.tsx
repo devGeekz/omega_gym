@@ -1,71 +1,94 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { motion, useScroll, useSpring } from "motion/react";
 
-const programs = [
-  {
-    id: 1,
-    title: "Strength Training",
-    description: "Build muscle and increase overall strength.",
-    image: "/images/programs/strength.jpg",
-  },
-  {
-    id: 2,
-    title: "HIIT & Conditioning",
-    description: "High-intensity workouts to burn fat fast.",
-    image: "/images/programs/hiit.jpg",
-  },
-  {
-    id: 3,
-    title: "Yoga & Mobility",
-    description: "Improve flexibility and mental calm.",
-    image: "/images/programs/yoga.jpg",
-  },
-];
+export default function Parallax() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
-export default function ProgramsPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-6 pt-32 pb-20">
-      <div className="max-w-6xl mx-auto">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-bold mb-12 text-center"
-        >
-          Training Programs
-        </motion.h1>
+    <div id="example">
+      {/* {[1, 2, 3, 4, 5].map((image) => (
+        <Image key={image} id={image} />
+      ))} */}
+      <motion.div className="progress" style={{ scaleX }} />
+      <StyleSheet />
+    </div>
+  );
+}
 
-        <div className="grid md:grid-cols-3 gap-10">
-          {programs.map((p, index) => (
-            <motion.div
-              key={p.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.15 }}
-            >
-              <Card className="overflow-hidden bg-zinc-900 border-zinc-700 rounded-2xl">
-                <Image
-                  src={p.image}
-                  width={500}
-                  height={300}
-                  alt={p.title}
-                  className="h-56 w-full object-cover"
-                />
-                <CardHeader>
-                  <h2 className="text-2xl font-bold">{p.title}</h2>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-400 mb-4">{p.description}</p>
-                  <Button className="w-full">View Details</Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </main>
+/**
+ * ==============   Styles   ================
+ */
+
+function StyleSheet() {
+  return (
+    <style>{`
+        html {
+            scroll-snap-type: y mandatory;
+        }
+
+        .img-container {
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .img-container > div {
+            width: 300px;
+            height: 400px;
+            margin: 20px;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 300px;
+            height: 400px;
+        }
+
+        @media (max-width: 500px) {
+            .img-container > div {
+                width: 150px;
+                height: 200px;
+            }
+
+            .img-container img {
+                width: 150px;
+                height: 200px;
+            }
+        }
+
+        .img-container h2 {
+            color: #8df0cc;
+            margin: 0;
+            font-family: "Azeret Mono", monospace;
+            font-size: 50px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 1.2;
+            position: absolute;
+            display: inline-block;
+            top: calc(50% - 25px);
+            left: calc(50% + 120px);
+        }
+
+        .progress {
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #8df0cc;
+            bottom: 50px;
+            transform: scaleX(0);
+        }
+    `}</style>
   );
 }
