@@ -53,7 +53,7 @@ export default function CoverHero({ header, subHeader, coverImg }: Props) {
             ))}
           </motion.h1>
 
-          Subheader with typewriter effect
+          Subheader with typewriter effects somwhat like the header
           <motion.p
             initial="hidden"
             whileInView="visible"
