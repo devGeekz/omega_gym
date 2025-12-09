@@ -34,7 +34,7 @@ export default function CoverHero({ header, subHeader, coverImg }: Props) {
         <div className="absolute inset-0 bg-black opacity-80 backdrop-blur-sm z-0"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Header with typewriter effect */}
+          Header with typewriter effect
           <motion.h1
             initial="hidden"
             whileInView="visible"
