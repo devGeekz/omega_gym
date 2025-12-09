@@ -13,6 +13,7 @@ export default function Cpage() {
         coverImg="/images/community.jpg"
       />
 
+there is someting needs to be dones
       <ReviewStatistics />
       <SuccessStories />
       <ReviewsSection />
