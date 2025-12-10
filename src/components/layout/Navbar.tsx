@@ -1,11 +1,11 @@
 import Logo from "./Logo";
 import NavLinks from "./NavLInks";
-import NavControls from "./NavControls";
 import { auth } from "auth";
 import { Button } from "../ui/button";
 import { DarkthemeBtn } from "./DarkthemeBtn";
 import Link from "next/link";
 import { MobileNav } from "./MobileNav";
+import LogoutButton from "../auth/signout";
 
 export default async function Navbar() {
   const session = await auth();
@@ -26,9 +26,7 @@ export default async function Navbar() {
             <MobileNav />
 
             {session ? (
-              <>
-                <NavControls />
-              </>
+              <LogoutButton />
             ) : (
               <>
                 <Link href={"/login"}>
