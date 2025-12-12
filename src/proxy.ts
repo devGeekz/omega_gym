@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export const config = {
-  matcher: ["/admin/:path*", "/profile/:path*", "/become-agent", "/contact"],
+  matcher: ["/admin/:path*", "/profile/:path*", "/dashboard", "/contact"],
 };
 
 export default async function proxy(req: NextRequest) {

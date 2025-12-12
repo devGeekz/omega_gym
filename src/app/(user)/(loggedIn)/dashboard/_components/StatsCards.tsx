@@ -33,7 +33,7 @@ export function StatsCards() {
         >
           <Card className="relative backdrop-blur-xl">
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${item.accent}`}
+              className={`absolute inset-0 bg-linear-to-br ${item.accent}`}
             />
 
             <CardHeader>
