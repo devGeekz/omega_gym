@@ -26,7 +26,7 @@ const adminLinks = [
 
 // User-specific links
 const userLinks = [
-  { href: "/dashboard", label: "Profile", icon: LayoutDashboard },
+  { href: "/profile", label: "Profile", icon: LayoutDashboard },
 ];
 
 export default function NavLinks() {
@@ -68,7 +68,8 @@ export default function NavLinks() {
         })}
 
         {/* Admin-specific Links */}
-        {isAdmin &&
+        {/* {isAdmin && */}
+        {
           adminLinks.map(({ href, label, icon: Icon }) => {
             const active = isActive(href);
 

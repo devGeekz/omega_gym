@@ -1,7 +1,7 @@
 "use client";
 
 import ClassSchdules from "@/components/home/ClassSchedules";
-import CoverHero from "@/components/home/CoverHero";
+import { CoverHero } from "@/components/home/CoverHero";
 import Trainers from "@/components/home/Trainers";
 import { motion } from "framer-motion";
 

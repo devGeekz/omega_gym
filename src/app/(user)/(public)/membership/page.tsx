@@ -1,4 +1,4 @@
-import CoverHero from "@/components/home/CoverHero";
+import { CoverHero } from "@/components/home/CoverHero";
 import Cta from "@/components/home/Cta";
 import Memberships from "@/components/home/MembershipCards";
 

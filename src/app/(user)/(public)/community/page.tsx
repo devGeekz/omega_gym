@@ -2,7 +2,7 @@ import ReviewStatistics from "@/components/community/ReviewStatistics";
 import ReviewForm from "@/components/community/ReviewForm";
 import ReviewsSection from "@/components/community/ReviewSection";
 import SuccessStories from "@/components/community/SuccessStories";
-import CoverHero from "@/components/home/CoverHero";
+import { CoverHero } from "@/components/home/CoverHero";
 
 export default function Cpage() {
   return (
