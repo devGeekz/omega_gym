@@ -1,5 +1,10 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/admin/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,10 +17,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       }
     >
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <SidebarInset>
+        <div className="flex flex-1 flex-col  bc">
+        <SiteHeader />
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            {children}
+          </div>
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   );
 }
