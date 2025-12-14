@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import {
+  IconCalendar,
   IconCamera,
   IconChartBar,
   IconDashboard,
-  IconDatabase,
   IconFileAi,
   IconFileDescription,
   IconFileWord,
@@ -13,8 +13,9 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
-  IconReport,
+  IconPhoto,
   IconSettings,
+  IconStar,
   IconUsers,
 } from "@tabler/icons-react";
 
@@ -32,6 +33,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const data = {
   user: {
@@ -128,35 +130,41 @@ const data = {
   ],
   documents: [
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
+      name: "Class Schedule",
+      url: "/admin/class-schedules",
+      icon: IconCalendar,
     },
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
+      name: "Gallery",
+      url: "/admin/gallery",
+      icon: IconPhoto,
     },
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
+      name: "Trainers List",
+      url: "/admin/trainers",
+      icon: IconUsers,
     },
     {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
+      name: "Membership Plans",
+      url: "/admin/membership-plans",
       icon: IconFileWord,
+    },
+    {
+      name: "Success Stories",
+      url: "/admin/success-stories",
+      icon: IconStar,
+    },
+    {
+      name: "Gym Policies",
+      url: "/admin/gym-policies",
+      icon: IconFileDescription,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
+  if (!session) return null;
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -164,12 +172,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <a href="#">
-                <IconInnerShadowTop className="!size-5" />
+              <Link href="#">
+                <IconInnerShadowTop className="size-5!" />
                 <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
