@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  IconDots,
-  IconFolder,
-  IconEdit,
-  type Icon,
-} from "@tabler/icons-react";
+import { IconDots, IconFolder, IconEdit, type Icon } from "@tabler/icons-react";
 
 import {
   DropdownMenu,
@@ -24,6 +19,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { activeClass } from "./constants";
 
 export function NavDocuments({
   items,
@@ -36,13 +33,21 @@ export function NavDocuments({
 }) {
   const { isMobile } = useSidebar();
 
+  const pathname = usePathname();
+
+  const isActive = (url: string) => pathname === url;
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Site Settings</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton
+              asChild
+              tooltip={item.name}
+              className={isActive(item.url) ? activeClass : ""}
+            >
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

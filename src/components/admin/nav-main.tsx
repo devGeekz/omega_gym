@@ -1,5 +1,8 @@
 "use client";
+
 import { type Icon } from "@tabler/icons-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   SidebarGroup,
@@ -8,31 +11,41 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { activeClass } from "./constants";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: Icon;
-  }[];
-}) {
+type NavItem = {
+  title: string;
+  url: string;
+  icon?: Icon;
+};
+
+export function NavMain({ items }: { items: NavItem[] }) {
+  const pathname = usePathname();
+
+  const isActive = (url: string) => pathname === url;
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <Link href={item.url}>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+          {items.map((item) => {
+            const active = isActive(item.url);
+
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  className={active ? activeClass : ""}
+                >
+                  <Link href={item.url}>
+                    {item.icon && <item.icon className="size-4" />}
+                    <span>{item.title}</span>
+                  </Link>
                 </SidebarMenuButton>
-              </Link>
-            </SidebarMenuItem>
-          ))}
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
