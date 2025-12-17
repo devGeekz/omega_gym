@@ -34,16 +34,18 @@ export default function GymPoliciesPage() {
   const {
     policies,
     filteredPolicies,
+    isLoading,
+    isError,
     createPolicy,
     updatePolicy,
     deletePolicy,
   } = usePolicies(searchTerm, selectedCategory, selectedStatus);
 
   // Handlers
-  const handleCreatePolicy = (
+  const handleCreatePolicy = async (
     data: Omit<Policy, "id" | "createdAt" | "updatedAt">
   ) => {
-    createPolicy(data);
+    await createPolicy(data);
     setIsCreateOpen(false);
   };
 
@@ -63,18 +65,18 @@ export default function GymPoliciesPage() {
     setIsDeleteOpen(true);
   };
 
-  const handleUpdatePolicy = (
+  const handleUpdatePolicy = async (
     data: Omit<Policy, "id" | "createdAt" | "updatedAt">
   ) => {
     if (!selectedPolicy) return;
-    updatePolicy(selectedPolicy.id, data);
+    await updatePolicy(selectedPolicy.id, data);
     setIsEditOpen(false);
     setSelectedPolicy(null);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!selectedPolicy) return;
-    deletePolicy(selectedPolicy.id);
+    await deletePolicy(selectedPolicy.id);
     setIsDeleteOpen(false);
     setSelectedPolicy(null);
   };
@@ -86,24 +88,49 @@ export default function GymPoliciesPage() {
     <div className="w-full space-y-6">
       <PageHeader onNewPolicy={() => setIsCreateOpen(true)} />
 
-      <PolicyStats policies={policies} />
+      {isError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950">
+          <p className="text-sm text-red-600 dark:text-red-400">
+            Failed to load policies. Please try refreshing the page.
+          </p>
+        </div>
+      )}
 
-      <PolicyFilters
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        selectedStatus={selectedStatus}
-        onStatusChange={setSelectedStatus}
-      />
+      {isLoading ? (
+        <div className="space-y-6">
+          {/* Loading skeletons */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="h-24 animate-pulse rounded-lg bg-muted dark:bg-muted/50"
+              />
+            ))}
+          </div>
+          <div className="h-32 animate-pulse rounded-lg bg-muted dark:bg-muted/50" />
+        </div>
+      ) : (
+        <>
+          <PolicyStats policies={policies} />
 
-      <PolicyList
-        policies={filteredPolicies}
-        hasFilters={hasFilters as boolean}
-        onEdit={handleEditPolicy}
-        onDelete={handleDeleteClick}
-        onView={handleViewPolicy}
-      />
+          <PolicyFilters
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedStatus={selectedStatus}
+            onStatusChange={setSelectedStatus}
+          />
+
+          <PolicyList
+            policies={filteredPolicies}
+            hasFilters={hasFilters as boolean}
+            onEdit={handleEditPolicy}
+            onDelete={handleDeleteClick}
+            onView={handleViewPolicy}
+          />
+        </>
+      )}
 
       <PolicyModals
         // Create
