@@ -25,7 +25,7 @@ export const StoryCard = memo(({ story, onView, onEdit, onDelete }: StoryCardPro
     >
       {/* Featured Badge */}
       {story.featured && (
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 text-sm font-medium text-white">
+        <div className="bg-linear-to-r from-amber-500 to-orange-500 px-4 py-2 text-sm font-medium text-white">
           ⭐ Featured Story
         </div>
       )}

@@ -25,7 +25,7 @@ export const PageHeader = ({ onNewStory }: PageHeaderProps) => {
         </div>
         <Button
           onClick={onNewStory}
-          className="gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+          className="gap-2 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
         >
           <Plus className="h-4 w-4" />
           New Story

@@ -40,7 +40,7 @@ export const TrainerStats = ({ trainers }: TrainerStatsProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className={`rounded-xl bg-gradient-to-br ${stat.color} p-6 text-white shadow-lg`}
+          className={`rounded-xl bg-linear-to-br ${stat.color} p-6 text-white shadow-lg`}
         >
           <div className="flex items-center justify-between">
             <div>

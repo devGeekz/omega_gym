@@ -25,7 +25,7 @@ export const TrainerCard = memo(
         className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow transition-all hover:shadow-lg dark:border-gray-800 dark:bg-gray-950"
       >
         {/* Header with status indicator */}
-        <div className="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 dark:border-gray-800 dark:from-gray-900 dark:to-gray-800">
+        <div className="border-b border-gray-200 bg-linear-to-r from-gray-50 to-gray-100 px-6 py-4 dark:border-gray-800 dark:from-gray-900 dark:to-gray-800">
           <div className="flex items-start justify-between">
             <div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white">

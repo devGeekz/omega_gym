@@ -250,7 +250,7 @@ export const StoryForm = ({
         )}
         <Button
           type="submit"
-          className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+          className="bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
         >
           {isEdit ? "Update Story" : "Create Story"}
         </Button>
