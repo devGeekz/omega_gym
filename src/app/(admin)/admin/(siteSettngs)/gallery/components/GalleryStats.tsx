@@ -6,7 +6,7 @@ import { Images, Eye, Star } from "lucide-react";
 
 interface GalleryStatsProps {
   images: GalleryImage[];
-}
+// }
 
 export function GalleryStats({ images }: GalleryStatsProps) {
   const stats = [
