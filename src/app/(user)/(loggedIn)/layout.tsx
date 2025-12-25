@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import { BackgroundComponent } from "@/components/ui/bckgrnd";
-import { DashboardHeader } from "./dashboard/_components/DashboardHeader";
+import { DashboardHeader } from "./profile/_components/DashboardHeader";
 
 interface LayoutProps {
   children: React.ReactNode;

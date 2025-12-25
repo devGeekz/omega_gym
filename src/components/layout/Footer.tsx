@@ -1,14 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react";
+import { Facebook, Instagram, Send, Twitter } from "lucide-react";
 import { GlassyContainer } from "../ui/glassy-background";
+import Link from "next/link";
+
+const footerLinks = [
+  { name: "Contact Us", href: "#" },
+  { name: "Terms of Service", href: "#" },
+  { name: "Privacy Policy", href: "#" },
+];
+
+const footerSocialLinks = [
+  { name: "Facebook", href: "#", icon: Facebook },
+  { name: "Instagram", href: "#", icon: Instagram },
+  { name: "Ticktok", href: "#", icon: Twitter },
+];
 
 export default function Footer() {
   return (
@@ -42,26 +54,18 @@ export default function Footer() {
             </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
-              <nav className="space-y-2 text-sm">
-                <a
-                  href="#"
-                  className="block transition-colors hover:text-primary"
-                >
-                  Contact Us
-                </a>
-                <a
-                  href="#"
-                  className="block transition-colors hover:text-primary"
-                >
-                  Terms of Service
-                </a>
-                <a
-                  href="#"
-                  className="block transition-colors hover:text-primary"
-                >
-                  Privacy Policy
-                </a>
-              </nav>
+              <ul className="space-y-2 text-sm">
+                {footerLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
@@ -74,80 +78,34 @@ export default function Footer() {
             </div>
             <div className="relative">
               <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
+
               <div className="mb-6 flex space-x-4">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                      >
-                        <Facebook className="h-4 w-4" />
-                        <span className="sr-only">Facebook</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Follow us on Facebook</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                      >
-                        <Twitter className="h-4 w-4" />
-                        <span className="sr-only">Twitter</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Follow us on Twitter</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                      >
-                        <Instagram className="h-4 w-4" />
-                        <span className="sr-only">Instagram</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Follow us on Instagram</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                      >
-                        <Linkedin className="h-4 w-4" />
-                        <span className="sr-only">LinkedIn</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Connect with us on LinkedIn</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="dark-mode" className="sr-only">
-                  Toggle dark mode
-                </Label>
+                {footerSocialLinks.map((link) => (
+                  <TooltipProvider key={link.name}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          asChild
+                          variant="outline"
+                          size="icon"
+                          className="rounded-full"
+                        >
+                          <Link
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <link.icon className="h-4 w-4" />
+                            <span className="sr-only">{link.name}</span>
+                          </Link>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Follow us on {link.name}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                ))}
               </div>
             </div>
           </div>

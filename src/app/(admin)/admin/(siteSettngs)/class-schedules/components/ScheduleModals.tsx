@@ -1,7 +1,28 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ScheduleForm } from "./ScheduleForm";
-import type { ClassSchedule } from "../types";
+import type { ClassSchedule } from "../types"; // Assumed main schedule type
+
+// Define the type for a single schedule entry within the ClassSchedule object
+interface ScheduleItem {
+  day: string;
+  startTime: string;
+  endTime: string;
+}
 
 interface ScheduleModalsProps {
   // Create Modal
@@ -49,9 +70,21 @@ export const ScheduleModals = ({
   onDeleteConfirm,
   isDeleting,
 }: ScheduleModalsProps) => {
+  // Helper to safely extract and type the schedule array for the View modal
+  const getScheduleDays = (): ScheduleItem[] => {
+    // Ensure viewSchedule.schedule is treated as the ScheduleItem array type
+    const schedule = viewSchedule?.schedule;
+    return Array.isArray(schedule) ? (schedule as ScheduleItem[]) : [];
+  };
+
+  const capacityFill =
+    viewSchedule && viewSchedule.capacity > 0
+      ? (viewSchedule.enrolledCount / viewSchedule.capacity) * 100
+      : 0;
+
   return (
     <>
-      {/* Create Modal */}
+      {/* -------------------- 1. Create Modal -------------------- */}
       <Dialog open={isCreateOpen} onOpenChange={onCreateOpenChange}>
         <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
           <DialogHeader>
@@ -61,9 +94,11 @@ export const ScheduleModals = ({
             </DialogDescription>
           </DialogHeader>
           <ScheduleForm
+            // Pass undefined for schedule to signal "Create" mode
             onSubmit={async (data) => {
               await onCreateSubmit(data);
-              onCreateOpenChange(false);
+              // Closing the modal upon successful submission
+              onCreateOpenChange(false); 
             }}
             onCancel={() => onCreateOpenChange(false)}
             isLoading={isCreating}
@@ -71,30 +106,24 @@ export const ScheduleModals = ({
         </DialogContent>
       </Dialog>
 
-      {/* View Modal */}
+      {/* -------------------- 2. View Modal -------------------- */}
       <Dialog open={isViewOpen} onOpenChange={onViewOpenChange}>
         <DialogContent className="max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{viewSchedule?.className}</DialogTitle>
+            <DialogTitle className="uppercase">
+              {viewSchedule?.className}
+            </DialogTitle>
             <DialogDescription>{viewSchedule?.trainer}</DialogDescription>
           </DialogHeader>
           {viewSchedule && (
             <div className="space-y-4">
-              {/* Trainer & Category */}
-              <div>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
-                  Trainer
-                </p>
-                <p className="font-semibold">{viewSchedule.trainer}</p>
-              </div>
-
               {/* Schedule */}
               <div>
                 <p className="text-xs text-slate-600 dark:text-slate-400">
                   Schedule
                 </p>
                 <div className="space-y-1">
-                  {viewSchedule.schedule.map((day, idx) => (
+                  {getScheduleDays().map((day, idx) => (
                     <p key={idx} className="font-medium">
                       {day.day}: {day.startTime} - {day.endTime}
                     </p>
@@ -130,7 +159,7 @@ export const ScheduleModals = ({
                 </div>
               </div>
 
-              {/* Capacity */}
+              {/* Capacity Progress Bar */}
               <div>
                 <p className="text-xs text-slate-600 dark:text-slate-400">
                   Capacity
@@ -138,9 +167,9 @@ export const ScheduleModals = ({
                 <div className="mt-1 flex items-center gap-3">
                   <div className="flex-1 rounded-full bg-slate-200 p-1 dark:bg-slate-700">
                     <div
-                      className="h-2 rounded-full bg-blue-500"
+                      className="h-2 rounded-full bg-blue-500 transition-all duration-300"
                       style={{
-                        width: `${Math.round((viewSchedule.enrolledCount / viewSchedule.capacity) * 100)}%`,
+                        width: `${Math.round(capacityFill)}%`,
                       }}
                     />
                   </div>
@@ -183,7 +212,7 @@ export const ScheduleModals = ({
         </DialogContent>
       </Dialog>
 
-      {/* Edit Modal */}
+      {/* -------------------- 3. Edit Modal -------------------- */}
       <Dialog open={isEditOpen} onOpenChange={onEditOpenChange}>
         <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
           <DialogHeader>
@@ -194,26 +223,32 @@ export const ScheduleModals = ({
           </DialogHeader>
           {editSchedule && (
             <ScheduleForm
-              schedule={editSchedule}
+              schedule={editSchedule} // Pass the schedule data for form initialization
               onSubmit={async (data) => {
+                // Ensure the ID is passed back for the update operation
                 await onEditSubmit({ ...data, id: editSchedule.id });
-                onEditOpenChange(false);
+                // onEditOpenChange(false);
               }}
               onCancel={() => onEditOpenChange(false)}
               isLoading={isEditing}
             />
           )}
+          {/* Fallback in case editSchedule is somehow missing, though controlled by `isEditOpen` */}
+          {!editSchedule && <p className="text-red-500">Error: Class data not loaded for editing.</p>}
         </DialogContent>
       </Dialog>
 
-      {/* Delete Modal */}
+      {/* -------------------- 4. Delete Modal -------------------- */}
       <AlertDialog open={isDeleteOpen} onOpenChange={onDeleteOpenChange}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Class Schedule</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete &quot;{deleteSchedule?.className}&quot;?
-              This action cannot be undone.
+              Are you sure you want to delete &quot;
+              <span className="font-semibold text-foreground">
+                {deleteSchedule?.className}
+              </span>
+              &quot;? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="rounded-lg bg-yellow-50 p-3 dark:bg-yellow-900/20">
@@ -222,17 +257,21 @@ export const ScheduleModals = ({
               members will need to be notified.
             </p>
           </div>
-          <div className="flex gap-3">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <div className="flex justify-end gap-3">
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => {
                 if (deleteSchedule) {
                   await onDeleteConfirm(deleteSchedule);
+                  // Modal closure is handled by parent component's state update after success, 
+                  // but we close it here immediately after confirmation call
+                  // for better responsiveness if the parent state update is slow.
+                  // If the parent handles closing, this line can be removed.
                   onDeleteOpenChange(false);
                 }
               }}
               disabled={isDeleting}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
             >
               {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>

@@ -2,16 +2,13 @@
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { nameshorterner } from "@/helper/nameshorterner";
 
 export function DashboardHeader() {
   const { data: session } = useSession();
 
   const displayName = session?.user?.name || session?.user?.email || "User";
-  const userInitials = session?.user?.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+  const userInitials = nameshorterner(displayName);
 
   return (
     <motion.header

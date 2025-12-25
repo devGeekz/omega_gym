@@ -196,11 +196,157 @@ html.theme-transition * {
     transform: translateY(30px);
     transition: all 0.7s ease-out;
   }
-   .bc {
+  .bc {
     @apply border-4 border-red-700;
   }
   .slow {
     @apply transition-all duration-300 ease-in;
+  }
+
+  /* Smooth animation utilities for fine-tuning */
+  @keyframes smooth-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes smooth-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes smooth-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes smooth-slide-left {
+    from {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes smooth-slide-right {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes smooth-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes gradient-shimmer {
+    0%, 100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes hover-lift {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-2px);
+    }
+  }
+
+  .animate-smooth-fade-in {
+    animation: smooth-fade-in 0.5s ease-out forwards;
+  }
+
+  .animate-smooth-slide-up {
+    animation: smooth-slide-up 0.5s ease-out forwards;
+  }
+
+  .animate-smooth-slide-down {
+    animation: smooth-slide-down 0.5s ease-out forwards;
+  }
+
+  .animate-smooth-slide-left {
+    animation: smooth-slide-left 0.5s ease-out forwards;
+  }
+
+  .animate-smooth-slide-right {
+    animation: smooth-slide-right 0.5s ease-out forwards;
+  }
+
+  .animate-smooth-scale-in {
+    animation: smooth-scale-in 0.5s ease-out forwards;
+  }
+
+  .animate-linear-shimmer {
+    animation: gradient-shimmer 3s ease-in-out infinite;
+  }
+
+  .hover\:animate-lift:hover {
+    animation: hover-lift 0.3s ease-out forwards;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .transition-smooth-slow {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .transition-smooth-fast {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  /* Enhanced shadow transitions */
+  .shadow-hover {
+    @apply shadow-lg transition-shadow duration-300;
+  }
+
+  .shadow-hover:hover {
+    @apply shadow-2xl;
+  }
+
+  /* Smooth scale transforms */
+  .scale-hover-105 {
+    @apply transition-transform duration-300;
+  }
+
+  .scale-hover-105:hover {
+    @apply scale-105;
   }
 }
 

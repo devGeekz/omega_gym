@@ -34,99 +34,57 @@ model User {
   password           String?
   emailVerified      DateTime?          @map("email_verified")
   image              String?
+  phone              String?
+  bio                String?
+  gender             String?
+  address            Json?
   role               Role               @default(CLIENT)
   userStatus         VerficationStatus  @default(PENDING)
   accounts           Account[]
   stripeCustomerId   String?            @unique
   subscriptionStatus SubscriptionStatus @default(NONE)
-  subscriptions      Subscription[]
-  bookings           Booking[]
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 
   @@map("users")
 }
 
-model GymPolicy {
-  id          String   @id @default(cuid())
-  title       String
-  description String   @db.Text
-  category    String
-  status      String   @default("Draft")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model MembershipPlan {
-  id                   String         @id @default(cuid())
-  name                 String
-  description          String?
-  features             String[] // ["24/7 access", "Free classes", ...]
-  priceMonthly         Int? // stored in cents
-  priceYearly          Int?
-  stripeProductId      String?
-  stripePriceIdMonthly String?
-  stripePriceIdYearly  String?
-  subscriptions        Subscription[]
-}
-
-model Subscription {
-  id                   String             @id @default(cuid())
-  user                 User               @relation(fields: [userId], references: [id])
-  userId               String
-  plan                 MembershipPlan     @relation(fields: [planId], references: [id])
-  planId               String
-  stripeSubscriptionId String?            @unique
-  status               SubscriptionStatus @default(ACTIVE)
-  currentPeriodStart   DateTime?
-  currentPeriodEnd     DateTime?
-  createdAt            DateTime           @default(now())
-}
-
-model Trainer {
-  id              String          @id @default(cuid())
-  name            String
-  specialty       String?
-  experienceYears Int?
-  profilePhoto    String?
-  bio             String?
-  socialLinks     Json?
-  programs        Program[]
-  classSchedules  ClassSchedule[]
-}
-
-model Program {
-  id             String          @id @default(cuid())
-  title          String
-  description    String?
-  difficulty     Difficulty      @default(BEGINNER)
-  durationWeeks  Int?
-  trainer        Trainer?        @relation(fields: [trainerId], references: [id])
-  trainerId      String?
-  coverImage     String?
-  content        Json? // for rich text (Sanity, PortableText, etc.)
-  classSchedules ClassSchedule[]
-}
-
 model ClassSchedule {
-  id        String    @id @default(cuid())
-  program   Program   @relation(fields: [programId], references: [id])
-  programId String
-  trainer   Trainer   @relation(fields: [trainerId], references: [id])
+  id        String @id @default(cuid())
+  className String
+  trainer   String
   trainerId String
-  date      DateTime
-  time      DateTime
-  maxSlots  Int       @default(20)
-  bookings  Booking[]
+
+  schedule Json // ScheduleDay[]
+
+  capacity      Int
+  enrolledCount Int
+
+  description String
+  level       FitnessLevel
+  category    ClassCategory
+
+  duration Int // minutes
+  price    Float
+
+  isActive Boolean @default(true)
+
+  startDate DateTime
+  endDate   DateTime?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  scheduleDays ScheduleDay[]
 }
 
-model Booking {
-  id         String        @id @default(cuid())
-  user       User          @relation(fields: [userId], references: [id])
-  userId     String
-  schedule   ClassSchedule @relation(fields: [scheduleId], references: [id])
-  scheduleId String
-  createdAt  DateTime      @default(now())
+model ScheduleDay {
+  id        String @id @default(cuid())
+  day       String
+  startTime String
+  endTime   String
+
+  classScheduleId String
+  classSchedule   ClassSchedule @relation(fields: [classScheduleId], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------
@@ -155,4 +113,21 @@ enum VerficationStatus {
   VERIFIED
   PENDING
   BLOCKED
+}
+
+enum FitnessLevel {
+  Beginner
+  Intermediate
+  Advanced
+}
+
+enum ClassCategory {
+  StrengthTraining
+  Cardio
+  Yoga
+  Pilates
+  CrossFit
+  Boxing
+  HIIT
+  FunctionalFitness
 }

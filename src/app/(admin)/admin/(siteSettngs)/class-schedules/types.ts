@@ -60,19 +60,19 @@ export const DAYS_OF_WEEK = [
 ] as const;
 
 export const LEVEL_COLORS: Record<FitnessLevel, string> = {
-  Beginner: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
-  Intermediate: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
-  Advanced: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100",
+  Beginner: "bg-green-800 text-green-800 dark:bg-green-900 dark:text-green-100",
+  Intermediate: "bg-blue-800 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
+  Advanced: "bg-red-800 text-red-800 dark:bg-red-900 dark:text-red-100",
 };
 
 export const CATEGORY_COLORS: Record<ClassCategory, string> = {
   "Strength Training": "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100",
-  Cardio: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-100",
-  Yoga: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
-  Pilates: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
-  CrossFit: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
-  Boxing: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
-  HIIT: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100",
+  Cardio: "bg-orange-800 text-orange-800 dark:bg-orange-900 dark:text-orange-100",
+  Yoga: "bg-purple-800 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
+  Pilates: "bg-pink-800 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
+  CrossFit: "bg-yellow-800 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
+  Boxing: "bg-blue-800 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
+  HIIT: "bg-indigo-800 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100",
   "Functional Fitness": "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
 };
 

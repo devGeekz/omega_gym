@@ -17,27 +17,42 @@ const ScheduleCardComponent = ({
   onEdit,
   onDelete,
 }: ScheduleCardProps) => {
+  /* ---------------------------------------------
+     Normalize schedule days (CRITICAL)
+  --------------------------------------------- */
+  const days = useMemo(
+    () => (Array.isArray(schedule.schedule) ? schedule.schedule : []),
+    [schedule.schedule]
+  );
+
+  /* ---------------------------------------------
+     Derived values
+  --------------------------------------------- */
   const occupancyRate = useMemo(() => {
+    if (!schedule.capacity) return 0;
     return Math.round((schedule.enrolledCount / schedule.capacity) * 100);
   }, [schedule.enrolledCount, schedule.capacity]);
 
   const scheduleDisplay = useMemo(() => {
-    if (schedule.schedule.length === 0) return "No schedule";
-    if (schedule.schedule.length === 1) {
-      const day = schedule.schedule[0];
-      return `${day.day}: ${day.startTime} - ${day.endTime}`;
+    if (days.length === 0) return "No schedule";
+    if (days.length === 1) {
+      const { day, startTime, endTime } = days[0];
+      return `${day}: ${startTime} - ${endTime}`;
     }
-    return `${schedule.schedule.length} days/week`;
-  }, [schedule.schedule]);
+    return `${days.length} days / week`;
+  }, [days]);
 
   const categoryColor =
-    CATEGORY_COLORS[
-      schedule.category as keyof typeof CATEGORY_COLORS
-    ] || "bg-gradient-to-r from-slate-500 to-slate-600";
-  const levelColor =
-    LEVEL_COLORS[schedule.level as keyof typeof LEVEL_COLORS] ||
-    "bg-gradient-to-r from-slate-500 to-slate-600";
+    CATEGORY_COLORS[schedule.category as keyof typeof CATEGORY_COLORS] ??
+    "bg-linear-to-r from-slate-500 to-slate-600";
 
+  const levelColor =
+    LEVEL_COLORS[schedule.level as keyof typeof LEVEL_COLORS] ??
+    "bg-linear-to-r from-slate-500 to-slate-600";
+
+  /* ---------------------------------------------
+     Render
+  --------------------------------------------- */
   return (
     <motion.div
       layout
@@ -47,36 +62,38 @@ const ScheduleCardComponent = ({
       transition={{ duration: 0.2 }}
       className="overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow hover:shadow-md dark:border-slate-700 dark:bg-slate-900"
     >
-      {/* Header with Category Badge */}
+      {/* Header */}
       <div className={`${categoryColor} px-4 py-3`}>
         <div className="flex items-start justify-between gap-3">
           <div>
             <h3 className="font-semibold text-white">{schedule.className}</h3>
             <p className="text-sm text-white/80">{schedule.trainer}</p>
           </div>
+
           {schedule.isActive && (
-            <div className="flex h-3 w-3 animate-pulse rounded-full bg-green-400" />
+            <span className="mt-1 h-3 w-3 animate-pulse rounded-full bg-green-400" />
           )}
         </div>
       </div>
 
       {/* Content */}
       <div className="space-y-3 px-4 py-3">
-        {/* Schedule Times */}
+        {/* Schedule */}
         <div className="flex items-start gap-2">
           <Clock className="mt-0.5 h-4 w-4 text-slate-500 dark:text-slate-400" />
           <div className="flex-1">
             <p className="text-xs font-medium text-slate-600 dark:text-slate-400">
               {scheduleDisplay}
             </p>
-            {schedule.schedule.length > 1 && (
+
+            {days.length > 0 && (
               <div className="mt-1 space-y-0.5">
-                {schedule.schedule.map((day, idx) => (
+                {days.map(({ day, startTime, endTime }, idx) => (
                   <p
-                    key={idx}
+                    key={`${day}-${idx}`}
                     className="text-xs text-slate-500 dark:text-slate-500"
                   >
-                    {day.day}: {day.startTime} - {day.endTime}
+                    {day}: {startTime} – {endTime}
                   </p>
                 ))}
               </div>
@@ -84,7 +101,7 @@ const ScheduleCardComponent = ({
           </div>
         </div>
 
-        {/* Capacity Bar */}
+        {/* Capacity */}
         <div>
           <div className="mb-1 flex items-center justify-between">
             <div className="flex items-center gap-1">
@@ -97,12 +114,15 @@ const ScheduleCardComponent = ({
               {occupancyRate}%
             </span>
           </div>
+
           <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${occupancyRate}%` }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className={`h-full ${occupancyRate > 80 ? "bg-red-500" : "bg-blue-500"}`}
+              className={`h-full ${
+                occupancyRate > 80 ? "bg-red-500" : "bg-blue-500"
+              }`}
             />
           </div>
         </div>
@@ -110,7 +130,9 @@ const ScheduleCardComponent = ({
         {/* Duration & Price */}
         <div className="grid grid-cols-2 gap-2">
           <div className="rounded bg-slate-50 px-2 py-1.5 dark:bg-slate-800">
-            <p className="text-xs text-slate-600 dark:text-slate-400">Duration</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Duration
+            </p>
             <p className="font-semibold text-slate-900 dark:text-white">
               {schedule.duration}m
             </p>
@@ -149,29 +171,28 @@ const ScheduleCardComponent = ({
           <button
             onClick={() => onView(schedule)}
             className="flex-1 rounded px-2 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-blue-50 dark:text-slate-300 dark:hover:bg-blue-900/20"
-            title="View details"
           >
-            <Eye className="inline h-3.5 w-3.5 mr-1" />
+            <Eye className="mr-1 inline h-3.5 w-3.5" />
             View
           </button>
         )}
+
         {onEdit && (
           <button
             onClick={() => onEdit(schedule)}
             className="flex-1 rounded px-2 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-amber-50 dark:text-slate-300 dark:hover:bg-amber-900/20"
-            title="Edit schedule"
           >
-            <Edit2 className="inline h-3.5 w-3.5 mr-1" />
+            <Edit2 className="mr-1 inline h-3.5 w-3.5" />
             Edit
           </button>
         )}
+
         {onDelete && (
           <button
             onClick={() => onDelete(schedule)}
             className="flex-1 rounded px-2 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
-            title="Delete schedule"
           >
-            <Trash2 className="inline h-3.5 w-3.5 mr-1" />
+            <Trash2 className="mr-1 inline h-3.5 w-3.5" />
             Delete
           </button>
         )}

@@ -11,6 +11,7 @@ import {
 } from "./components";
 import { useSchedules } from "./hooks/useSchedules";
 import type { ClassSchedule } from "./types";
+import type { ScheduleClass } from "@/types/schedules";
 
 export default function ClassSchedulesPage() {
   const {
@@ -36,7 +37,9 @@ export default function ClassSchedulesPage() {
 
   const [viewSchedule, setViewSchedule] = useState<ClassSchedule | undefined>();
   const [editSchedule, setEditSchedule] = useState<ClassSchedule | undefined>();
-  const [deleteSchedule, setDeleteSchedule] = useState<ClassSchedule | undefined>();
+  const [deleteSchedule, setDeleteSchedule] = useState<
+    ClassSchedule | undefined
+  >();
 
   const [isCreating, setIsCreating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -61,7 +64,7 @@ export default function ClassSchedulesPage() {
       matches = matches && schedule.category === selectedCategory;
     }
 
-    // Level filter
+    // // Level filter
     if (selectedLevel) {
       matches = matches && schedule.level === selectedLevel;
     }
@@ -74,7 +77,10 @@ export default function ClassSchedulesPage() {
     async (data: Partial<ClassSchedule>) => {
       setIsCreating(true);
       try {
-        const scheduleData: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt"> = {
+        const scheduleData: Omit<
+          ClassSchedule,
+          "id" | "createdAt" | "updatedAt"
+        > = {
           className: data.className || "",
           trainer: data.trainer || "",
           trainerId: data.trainerId || "",
@@ -105,20 +111,21 @@ export default function ClassSchedulesPage() {
   );
 
   // Handle Edit
-  const handleEdit = useCallback(
-    (schedule: ClassSchedule) => {
-      setEditSchedule(schedule);
-      setIsEditOpen(true);
-    },
-    []
-  );
+  const handleEdit = useCallback((schedule: ClassSchedule) => {
+    setEditSchedule(schedule);
+    setIsEditOpen(true);
+  }, []);
 
   const handleEditSubmit = useCallback(
     async (data: Partial<ClassSchedule>) => {
       if (!data.id) return;
       setIsEditing(true);
+
       try {
-        const scheduleData: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt"> = {
+        const scheduleData: Omit<
+          ClassSchedule,
+          "id" | "createdAt" | "updatedAt"
+        > = {
           className: data.className || "",
           trainer: data.trainer || "",
           trainerId: data.trainerId || "",
@@ -134,6 +141,8 @@ export default function ClassSchedulesPage() {
           startDate: data.startDate || new Date(),
           endDate: data.endDate,
         };
+      console.log(data)
+
         await updateSchedule(data.id, scheduleData);
         toast.success("Class updated successfully!");
       } catch (error) {
@@ -148,13 +157,10 @@ export default function ClassSchedulesPage() {
   );
 
   // Handle Delete
-  const handleDelete = useCallback(
-    (schedule: ClassSchedule) => {
-      setDeleteSchedule(schedule);
-      setIsDeleteOpen(true);
-    },
-    []
-  );
+  const handleDelete = useCallback((schedule: ClassSchedule) => {
+    setDeleteSchedule(schedule);
+    setIsDeleteOpen(true);
+  }, []);
 
   const handleDeleteConfirm = useCallback(
     async (schedule: ClassSchedule) => {

@@ -16,7 +16,9 @@ interface UseSchedulesReturn {
   filteredSchedules: ClassSchedule[];
   isLoading: boolean;
   isError: boolean;
-  createSchedule: (data: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt">) => Promise<void>;
+  createSchedule: (
+    data: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt">
+  ) => Promise<void>;
   updateSchedule: (
     id: string,
     data: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt">
@@ -43,20 +45,18 @@ export const useSchedules = (
         // Build query params
         const params = new URLSearchParams();
         if (searchTerm) params.append("search", searchTerm);
-        if (selectedCategory !== "All") params.append("category", selectedCategory);
+        if (selectedCategory !== "All")
+          params.append("category", selectedCategory);
         if (selectedLevel !== "All") params.append("level", selectedLevel);
 
-        const response = await fetch(`/api/class-schedules?${params.toString()}`);
+        const response = await fetch(
+          `/api/class-schedules?${params.toString()}`
+        );
         const result: ApiResponse<ClassSchedule[]> = await response.json();
-
         if (result.success && result.data) {
           setSchedules(
             result.data.map((s) => ({
               ...s,
-              startDate: new Date(s.startDate),
-              endDate: s.endDate ? new Date(s.endDate) : undefined,
-              createdAt: new Date(s.createdAt),
-              updatedAt: new Date(s.updatedAt),
             }))
           );
         } else {
@@ -77,15 +77,25 @@ export const useSchedules = (
 
   const filteredSchedules = useMemo(() => {
     return schedules.filter((schedule) => {
-      const matchesSearch =
-        schedule.className.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        schedule.trainer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        schedule.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "All" || schedule.category === selectedCategory;
-      const matchesLevel = selectedLevel === "All" || schedule.level === selectedLevel;
-
-      return matchesSearch && matchesCategory && matchesLevel;
+      let matches = true;
+      // Search filter
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase();
+        matches =
+          matches &&
+          (schedule.className.toLowerCase().includes(searchLower) ||
+            schedule.trainer.toLowerCase().includes(searchLower) ||
+            schedule.description.toLowerCase().includes(searchLower));
+      }
+      // Category filter
+      if (selectedCategory && selectedCategory !== "All") {
+        matches = matches && schedule.category === selectedCategory;
+      }
+      // Level filter
+      if (selectedLevel && selectedLevel !== "All") {
+        matches = matches && schedule.level === selectedLevel;
+      }
+      return matches;
     });
   }, [schedules, searchTerm, selectedCategory, selectedLevel]);
 
@@ -105,7 +115,9 @@ export const useSchedules = (
             {
               ...result.data!,
               startDate: new Date(result.data!.startDate),
-              endDate: result.data!.endDate ? new Date(result.data!.endDate) : undefined,
+              endDate: result.data!.endDate
+                ? new Date(result.data!.endDate)
+                : undefined,
               createdAt: new Date(result.data!.createdAt),
               updatedAt: new Date(result.data!.updatedAt),
             },
@@ -124,7 +136,11 @@ export const useSchedules = (
   );
 
   const updateSchedule = useCallback(
-    async (id: string, data: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt">) => {
+    async (
+      id: string,
+      data: Omit<ClassSchedule, "id" | "createdAt" | "updatedAt">
+    ) => {
+      return
       try {
         const response = await fetch(`/api/class-schedules/${id}`, {
           method: "PATCH",
@@ -141,7 +157,9 @@ export const useSchedules = (
                 ? {
                     ...result.data!,
                     startDate: new Date(result.data!.startDate),
-                    endDate: result.data!.endDate ? new Date(result.data!.endDate) : undefined,
+                    endDate: result.data!.endDate
+                      ? new Date(result.data!.endDate)
+                      : undefined,
                     createdAt: new Date(result.data!.createdAt),
                     updatedAt: new Date(result.data!.updatedAt),
                   }

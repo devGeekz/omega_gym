@@ -2,6 +2,10 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/admin/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 
+export const metadata = {
+  title: "User Management | Admin",
+  description: "Manage gym members and their profiles",
+};
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider
